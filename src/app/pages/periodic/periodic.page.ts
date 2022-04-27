@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { TListItem }         from '../../components/list/list.component';
+import { Component, OnInit }              from '@angular/core';
+import { TListItem }                      from '../../components/list/list.component';
 import { TSettingItem }                   from '../../services/settings.service';
 import { PeriodicService, TPeriodicItem } from '../../services/periodic.service';
+import { Observable }                     from 'rxjs';
 
 @Component({
   selector: 'app-periodic',
@@ -10,7 +11,7 @@ import { PeriodicService, TPeriodicItem } from '../../services/periodic.service'
 })
 export class PeriodicPage implements OnInit {
 
-  lists: TPeriodicItem[];
+  lists: Observable<TPeriodicItem[]>;
 
   constructor(
     private periodicService: PeriodicService,
@@ -25,6 +26,19 @@ export class PeriodicPage implements OnInit {
   }
 
   addItem(key: string) {
-    console.log(key);
+    if (key === 'default') {
+      this.periodicService.setList(key, {
+        title: 'Подписки',
+        list: [],
+        id: 'subscribe',
+      });
+
+      return;
+    }
+    this.periodicService.setList(key, {
+      title: 'Связь',
+      sum: {value: 330},
+      date: +new Date(2022, 3, 23),
+    });
   }
 }

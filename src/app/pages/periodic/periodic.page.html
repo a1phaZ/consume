@@ -3,7 +3,7 @@
     <app-list-header [title]="'Абонентские платежи'"
                      [mainHeader]="true" [buttonTitle]="'Добавить'"
                      (buttonClick)="addItem('default')"></app-list-header>
-    <app-list [list]="list.list" *ngFor="let list of lists">
+    <app-list [list]="list.list" *ngFor="let list of lists | async">
       <app-list-header [title]="list.title"
                        [mainHeader]="false"
                        [buttonTitle]="'Добавить'"
