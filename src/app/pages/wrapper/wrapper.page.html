@@ -1,0 +1,18 @@
+<ion-content>
+  <ion-tabs #tabs>
+    <ion-tab-bar slot="bottom" class="app__tabbar">
+
+      <ion-tab-button [tab]="tab.id" class="tab__button" *ngFor="let tab of tabsList">
+        <app-custom-icon [icon]="tab.id"></app-custom-icon>
+
+        <ion-label class="tab__label">{{tab.title}}</ion-label>
+      </ion-tab-button>
+
+<!--      <ion-tab-button tab="home2" class="tab__button">-->
+<!--        <ion-icon class="tab__icon settings"></ion-icon>-->
+<!--        <ion-label class="tab__label">Home 2</ion-label>-->
+<!--      </ion-tab-button>-->
+
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

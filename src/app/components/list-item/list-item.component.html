@@ -1,0 +1,23 @@
+<div class="list__item">
+  <section class="item__icon" *ngIf="item.icon">
+    <ion-icon slot="start" [name]="item.icon"></ion-icon>
+  </section>
+
+  <section class="item__info">
+    <div class="info__title">{{item.title}}</div>
+    <div class="info__description">{{item.date | dateFormat}}</div>
+    <div class="info__description">{{item.description}}</div>
+  </section>
+  <section class="item__total" *ngIf="item.sum">
+    <div class="item__value {{item.sum.income ? 'income' : null}}">
+<!--      <span class="value__sign">{{item.sum.income ? '+' : '-'}}</span>-->
+      {{item.sum.value | currency:"RUB":"symbol-narrow":'.2-2':'ru'}}
+    </div>
+  </section>
+  <section class="item__total" *ngIf="item.value">
+    <div class="item__value value">
+<!--      TODO Add units to value-->
+      {{item.value}}
+    </div>
+  </section>
+</div>

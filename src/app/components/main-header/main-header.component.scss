@@ -1,0 +1,29 @@
+.main__header{
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(122.27% 198.92% at -22.27% -27.38%, #0070BA 0%, #1546A0 100%);
+  box-shadow: 0px 16px 36px -16px rgba(21, 70, 160, 0.5);
+  border-radius: 0px 0px 41px 0px;
+  margin-bottom: 32px;
+
+  span {
+    font-family: 'Manrope', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #FFFFFF;
+  }
+
+  .greeting {
+    opacity: 0.5;
+    margin-bottom: 32px;
+  }
+
+  .balance {
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 55px;
+  }
+}

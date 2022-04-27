@@ -1,0 +1,8 @@
+<ion-list class="item__list">
+  <ng-content>
+  </ng-content>
+  <div *ngIf="list.length === 0" class="zero__length">
+    Список пуст
+  </div>
+  <app-list-item *ngFor="let item of list" [item]="item"></app-list-item>
+</ion-list>

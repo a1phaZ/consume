@@ -1,0 +1,79 @@
+.list__item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background: #FFFFFF;
+  /* new */
+
+  box-shadow: 2px 8px 48px -16px rgba(21, 70, 160, 0.1);
+  border-radius: 20px;
+
+  color: #243656;
+  padding: 12px;
+  margin-bottom: 8px;
+
+  .item__icon {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background: #F5F7FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 16px;
+
+    ion-icon {
+      width: 50%;
+      height: 50%;
+    }
+  }
+
+  .item__info {
+    flex: 1;
+    font-family: 'Manrope', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height */
+
+
+    /* Black */
+
+    color: #243656;
+
+    .info__description {
+      opacity: 0.5;
+      font-size: 12px;
+      line-height: 16px;
+    }
+  }
+
+  .item__total {
+    .item__value {
+      font-family: 'Manrope', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 18px;
+      /* identical to box height */
+
+      text-align: right;
+
+      /* Red */
+
+      color: #F47090;
+
+      &.income {
+        color: #37D39B;
+      }
+
+      &.value {
+        font-size: 16px;
+        line-height: 22px;
+        color: #243656;
+      }
+    }
+  }
+}

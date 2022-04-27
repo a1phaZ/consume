@@ -1,0 +1,37 @@
+.list__header {
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  padding-left: 0;
+  /* identical to box height */
+
+
+  /* Black */
+
+  color: #243656;
+
+  &.secondary {
+    font-size: 12px;
+    line-height: 16px;
+    color: #243656;
+    opacity: 0.5;
+  }
+
+  .header__button {
+    font-family: 'Manrope', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    /* identical to box height */
+
+
+    /* Black */
+
+    color: #243656;
+
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,28 @@
+.tab__icon {
+  height: 24px;
+  width: 24px;
+  margin-right: 8px;
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+
+  &[class*='home'] {
+    background: currentColor;
+    mask-image: url("../../../assets/icon/home.svg");
+  }
+
+  &[class*='settings'] {
+    background: currentColor;
+    mask-image: url("../../../assets/icon/setting.svg");
+  }
+
+  &[class*='back-button'] {
+    background: currentColor;
+    mask-image: url("../../../assets/icon/arrow_back.svg");
+  }
+
+  &[class*='periodic'] {
+    background: currentColor;
+    mask-image: url("../../../assets/icon/periodic.svg");
+  }
+}

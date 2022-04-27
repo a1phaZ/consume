@@ -1,0 +1,33 @@
+.app__tabbar {
+  background: #FFFFFF;
+  box-shadow: 0 0 46px -16px rgba(21, 70, 160, 0.1);
+  border-radius: 40px 0 0 0;
+
+  .tab__button {
+    background: transparent;
+    display: flex;
+    flex-direction: row;
+
+    &::part(native) {
+      font-family: 'Manrope', sans-serif;
+      font-style: normal;
+      font-weight: 400!important;
+      font-size: 12px!important;
+      line-height: 16px!important;
+      color: #243656;
+    }
+
+    .tab__label {
+      display: none;
+    }
+
+    &.tab-selected {
+      &::part(native) {
+        color: #0070BA;
+      }
+      .tab__label {
+        display: inherit;
+      }
+    }
+  }
+}

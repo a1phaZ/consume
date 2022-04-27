@@ -1,0 +1,6 @@
+<div class="buttons__panel">
+  <app-button *ngFor="let button of buttons"
+              [title]='button.title'
+              [icon]="button.icon"
+              [buttonClass]="button.buttonClass"></app-button>
+</div>
