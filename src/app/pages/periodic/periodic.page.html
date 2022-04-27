@@ -1,20 +1,14 @@
 <ion-content>
   <app-main-content>
     <app-list-header [title]="'Абонентские платежи'"
-                     [mainHeader]="true" [buttonTitle]="'Добавить'" (buttonClick)="addItem('default')"></app-list-header>
-    <app-list [list]="subsList">
-      <app-list-header [title]="'Подписки'"
+                     [mainHeader]="true" [buttonTitle]="'Добавить'"
+                     (buttonClick)="addItem('default')"></app-list-header>
+    <app-list [list]="list.list" *ngFor="let list of lists">
+      <app-list-header [title]="list.title"
                        [mainHeader]="false"
                        [buttonTitle]="'Добавить'"
-                       [total]="calcTotal(subsList) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"
-      (buttonClick)="addItem('subs')"></app-list-header>
-    </app-list>
-    <app-list [list]="loansList">
-      <app-list-header [title]="'Кредиты'"
-                       [mainHeader]="false"
-                       [buttonTitle]="'Добавить'"
-                       [total]="calcTotal(loansList) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"
-                       (buttonClick)="addItem('loans')"></app-list-header>
+                       [total]="calcTotal(list.list) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"
+                       (buttonClick)="addItem(list.id)"></app-list-header>
     </app-list>
   </app-main-content>
 </ion-content>
