@@ -1,11 +1,20 @@
 <ion-content>
   <app-main-content>
-    <app-list-header [title]="'Абонентские платежи'" [mainHeader]="true" [total]="calcTotal(subsList, loansList) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"></app-list-header>
+    <app-list-header [title]="'Абонентские платежи'"
+                     [mainHeader]="true" [buttonTitle]="'Добавить'" (buttonClick)="addItem('default')"></app-list-header>
     <app-list [list]="subsList">
-      <app-list-header [title]="'Подписки'" [mainHeader]="false" [buttonTitle]="'Добавить'" [total]="calcTotal(subsList) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"></app-list-header>
+      <app-list-header [title]="'Подписки'"
+                       [mainHeader]="false"
+                       [buttonTitle]="'Добавить'"
+                       [total]="calcTotal(subsList) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"
+      (buttonClick)="addItem('subs')"></app-list-header>
     </app-list>
     <app-list [list]="loansList">
-      <app-list-header [title]="'Кредиты'" [mainHeader]="false" [buttonTitle]="'Добавить'" [total]="calcTotal(loansList) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"></app-list-header>
+      <app-list-header [title]="'Кредиты'"
+                       [mainHeader]="false"
+                       [buttonTitle]="'Добавить'"
+                       [total]="calcTotal(loansList) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"
+                       (buttonClick)="addItem('loans')"></app-list-header>
     </app-list>
   </app-main-content>
 </ion-content>

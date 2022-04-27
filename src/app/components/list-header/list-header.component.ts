@@ -11,13 +11,14 @@ export class ListHeaderComponent implements OnInit {
   @Input() mainHeader = true;
   @Input() total: string;
 
-  @Output() showAll = new EventEmitter();
+  @Output() buttonClick = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {}
 
-  _showAll() {
-    this.showAll.emit();
+  _buttonClick($event) {
+    console.log($event);
+    this.buttonClick.emit($event);
   }
 }

@@ -1,4 +1,4 @@
 <ion-list-header class="list__header {{!mainHeader ? 'secondary' : null}}">
   <ion-label>{{title}}{{total ? " | "+total : null}}</ion-label>
-  <ion-button *ngIf="!!buttonTitle" class="header__button" (click)="_showAll()">{{buttonTitle}}</ion-button>
+  <ion-button *ngIf="!!buttonTitle" class="header__button" (click)="_buttonClick($event)">{{buttonTitle}}</ion-button>
 </ion-list-header>

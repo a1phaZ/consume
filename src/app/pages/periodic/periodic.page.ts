@@ -63,4 +63,7 @@ export class PeriodicPage implements OnInit {
     return total.toString();
   }
 
+  addItem(key: string) {
+    console.log(key);
+  }
 }
