@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverService }    from '../../services/popover.service';
 
 @Component({
   selector: 'app-buttons-panel',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ButtonsPanelComponent implements OnInit {
 
-  buttons: {title: string; icon: string; buttonClass: 'fill' | 'clear'}[] = [
+  buttons: {title: string; icon: string; buttonClass: 'fill' | 'clear'; click?: any}[] = [
     {
       title: 'Send Money',
       icon: 'arrow-up-outline',
@@ -22,10 +23,17 @@ export class ButtonsPanelComponent implements OnInit {
       title: '',
       icon: 'ellipsis-vertical-outline',
       buttonClass: 'clear',
+      click: async (ev) => {
+        console.log(ev);
+        ev.stopPropagation();
+        await this.popoverService.presentPopover(ev);
+      }
     }
   ];
 
-  constructor() { }
+  constructor(
+    private popoverService: PopoverService
+  ) { }
 
   ngOnInit() {}
 

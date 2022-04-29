@@ -2,5 +2,6 @@
   <app-button *ngFor="let button of buttons"
               [title]='button.title'
               [icon]="button.icon"
-              [buttonClass]="button.buttonClass"></app-button>
+              [buttonClass]="button.buttonClass"
+              (click)="button.click($event)"></app-button>
 </div>

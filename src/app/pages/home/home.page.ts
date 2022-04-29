@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component }      from '@angular/core';
+import { PopoverService } from '../../services/popover.service';
+import { ModalService }   from '../../services/modal.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,15 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(
+    private popoverService: PopoverService,
+    private modalService: ModalService,
+  ) {
+    this.popoverService.action$.subscribe((action) => {
+      if (action === 'new') {
+        return this.modalService.presentModal();
+      }
+    });
+  }
 
 }

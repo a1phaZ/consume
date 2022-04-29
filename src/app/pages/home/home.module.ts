@@ -13,6 +13,7 @@ import { ListItemComponent }     from '../../components/list-item/list-item.comp
 import { ListHeaderComponent }   from '../../components/list-header/list-header.component';
 import { MainContentComponent }  from '../../components/main-content/main-content.component';
 import { PipesModule }           from '../../pipes/pipes.module';
+import { FormModalPageModule }   from '../../modals/form-modal/form-modal.module';
 
 
 @NgModule({
@@ -21,13 +22,24 @@ import { PipesModule }           from '../../pipes/pipes.module';
 		FormsModule,
 		IonicModule,
 		HomePageRoutingModule,
-		PipesModule
+		PipesModule,
+    FormModalPageModule,
 	],
   exports: [
     ListComponent,
     ListHeaderComponent,
     MainContentComponent
   ],
-  declarations: [HomePage, MainHeaderComponent, ButtonsPanelComponent, ButtonComponent, ListComponent, ListItemComponent, ListHeaderComponent, MainContentComponent]
+  declarations: [
+    HomePage,
+    MainHeaderComponent,
+    ButtonsPanelComponent,
+    ButtonComponent,
+    ListComponent,
+    ListItemComponent,
+    ListHeaderComponent,
+    MainContentComponent,
+  ],
+  providers: []
 })
 export class HomePageModule {}

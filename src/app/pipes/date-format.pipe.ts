@@ -6,7 +6,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class DateFormatPipe implements PipeTransform {
 
   transform(value: number, ...args: unknown[]): string {
-    return Intl.DateTimeFormat('ru-RU', {day: 'numeric', month: 'long', year: 'numeric'}).format(value);
+    if (!value) {
+      return '';
+    }
+    return Intl.DateTimeFormat('ru-RU', {day: 'numeric', month: 'long', year: 'numeric'}).format(new Date(value));
   }
 
 }

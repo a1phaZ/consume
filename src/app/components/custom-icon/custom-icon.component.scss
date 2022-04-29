@@ -7,22 +7,22 @@
   mask-repeat: no-repeat;
 
   &[class*='home'] {
-    background: currentColor;
+    background: #0070BA;
     mask-image: url("../../../assets/icon/home.svg");
   }
 
   &[class*='settings'] {
-    background: currentColor;
+    background: #0070BA;
     mask-image: url("../../../assets/icon/setting.svg");
   }
 
   &[class*='back-button'] {
-    background: currentColor;
+    background: #243656;
     mask-image: url("../../../assets/icon/arrow_back.svg");
   }
 
   &[class*='periodic'] {
-    background: currentColor;
+    background: #0070BA;
     mask-image: url("../../../assets/icon/periodic.svg");
   }
 }

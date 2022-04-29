@@ -93,4 +93,20 @@ const periodicList: TPeriodicItem[] = [
         date: +new Date(2022, 3, 20),
       }
     ]
-  }];
+  }, {
+    id: 'zxcvzop2',
+    title: 'Коммуналка',
+    list: [
+      {
+        title: 'Вывоз мусора',
+        sum: { value: 895.79 },
+        date: +new Date(2022, 3, 25),
+      },
+      {
+        title: 'Электричество',
+        sum: { value: 5000 },
+        date: +new Date(2022, 3, 25),
+      }
+    ]
+  }
+  ];

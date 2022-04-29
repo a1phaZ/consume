@@ -1,0 +1,47 @@
+.input__field {
+  background: #FFFFFF;
+  /* Gray */
+
+  border: 1px solid #F5F7FA;
+  box-sizing: border-box;
+  border-radius: 20px;
+
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height */
+
+
+  /* Black */
+
+  color: #243656;
+
+  opacity: 1;
+
+  padding: 16px;
+  text-align: center;
+  width: 100%;
+
+  &::placeholder {
+    opacity: 0.5;
+  }
+}
+
+.input__label {
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height */
+
+
+  /* Black */
+
+  color: #243656;
+
+  opacity: 0.5;
+}
+
