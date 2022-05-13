@@ -127,7 +127,7 @@ export class DatabaseService {
           WHERE rowid = NEW.rowid;
         END;
       `;
-      await CapacitorSQLite.execute({ statements: statement });
+      await CapacitorSQLite.execute({ statements: statement, database: this.dbName });
       this.dbReady.next(true);
     }
   }
