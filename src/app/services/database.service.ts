@@ -97,9 +97,11 @@ export class DatabaseService {
     } else {
       this.dbName = 'consume';
       await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
-      await CapacitorSQLite.importFromJson({ jsonstring: JSON.stringify(DUMP) });
+      await CapacitorSQLite.open({ database: this.dbName });
       await Storage.set({ key: DB_SETUP_KEY, value: '1' });
+
       const statement = `
+        CREATE DATABASE consume;
         CREATE TABLE periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING);
 
         CREATE TABLE periodic_item (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, value DOUBLE (10, 2), date INTEGER, list_id CHAR (36));
