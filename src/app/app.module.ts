@@ -10,6 +10,7 @@ import { ComponentsModule }                              from './components/comp
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalService }                                  from './services/modal.service';
 import { PopoverService }                                from './services/popover.service';
+import { HttpClientModule }                              from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { PopoverService }                                from './services/popove
     ComponentsModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, FormBuilder, ModalService, PopoverService],
   bootstrap: [AppComponent],

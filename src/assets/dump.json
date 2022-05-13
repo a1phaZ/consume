@@ -1,0 +1,109 @@
+{
+    "type": "database",
+    "name": "test",
+    "objects": [
+        {
+            "type": "table",
+            "database": null,
+            "name": "periodic",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING)",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "CHAR",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "title",
+                    "type": "STRING"
+                }
+            ],
+            "rows": [
+                [
+                    "2C51FC13-DDEE-49B3-8369-5BE073C2A0D0",
+                    "Кредиты"
+                ]
+            ]
+        },
+        {
+            "type": "table",
+            "database": null,
+            "name": "periodic_item",
+            "withoutRowId": true,
+            "ddl": "CREATE TABLE periodic_item (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, value DOUBLE (10, 2), date INTEGER, list_id CHAR (36))",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "CHAR",
+                    "constraints": [
+                        {
+                            "type": "PRIMARY KEY",
+                            "definition": "PRIMARY KEY "
+                        },
+                        {
+                            "type": "UNIQUE",
+                            "definition": "UNIQUE"
+                        }
+                    ]
+                },
+                {
+                    "name": "title",
+                    "type": "STRING"
+                },
+                {
+                    "name": "value",
+                    "type": "DOUBLE (10, 2)"
+                },
+                {
+                    "name": "date",
+                    "type": "INTEGER"
+                },
+                {
+                    "name": "list_id",
+                    "type": "CHAR"
+                }
+            ],
+            "rows": [
+                [
+                    "9A175904-C472-46F9-B25E-E71F4271AFCD",
+                    "Ипотека",
+                    1000,
+                    1652430002317,
+                    "2C51FC13-DDEE-49B3-8369-5BE073C2A0D0"
+                ]
+            ]
+        },
+        {
+            "type": "trigger",
+            "database": null,
+            "name": "AutoGenerateGUID",
+            "ddl": "CREATE TRIGGER AutoGenerateGUID\nAFTER INSERT ON periodic\nFOR EACH ROW\nWHEN (NEW.id IS NULL)\nBEGIN\n   UPDATE periodic SET id = (select hex( randomblob(4)) || '-' || hex( randomblob(2))\n             || '-' || '4' || substr( hex( randomblob(2)), 2) || '-'\n             || substr('AB89', 1 + (abs(random()) % 4) , 1)  ||\n             substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)) ) WHERE rowid = NEW.rowid;\nEND",
+            "timing": "AFTER",
+            "action": "INSERT",
+            "table": "periodic",
+            "precondition": "(NEW.id IS NULL)\n",
+            "code": "UPDATE periodic SET id = (select hex( randomblob(4)) || '-' || hex( randomblob(2))\n             || '-' || '4' || substr( hex( randomblob(2)), 2) || '-'\n             || substr('AB89', 1 + (abs(random()) % 4) , 1)  ||\n             substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)) ) WHERE rowid = NEW.rowid"
+        },
+        {
+            "type": "trigger",
+            "database": null,
+            "name": "AutoGenerateGUID1",
+            "ddl": "CREATE TRIGGER AutoGenerateGUID1\nAFTER INSERT ON periodic_item\nFOR EACH ROW\nWHEN (NEW.id IS NULL)\nBEGIN\n   UPDATE periodic_item SET id = (select hex( randomblob(4)) || '-' || hex( randomblob(2))\n             || '-' || '4' || substr( hex( randomblob(2)), 2) || '-'\n             || substr('AB89', 1 + (abs(random()) % 4) , 1)  ||\n             substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)) ) WHERE rowid = NEW.rowid;\nEND",
+            "timing": "AFTER",
+            "action": "INSERT",
+            "table": "periodic_item",
+            "precondition": "(NEW.id IS NULL)\n",
+            "code": "UPDATE periodic_item SET id = (select hex( randomblob(4)) || '-' || hex( randomblob(2))\n             || '-' || '4' || substr( hex( randomblob(2)), 2) || '-'\n             || substr('AB89', 1 + (abs(random()) % 4) , 1)  ||\n             substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)) ) WHERE rowid = NEW.rowid"
+        }
+    ]
+}
