@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "consume",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
