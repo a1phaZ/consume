@@ -33,9 +33,10 @@ export class DatabaseService {
     if (info?.platform === 'android') {
       try {
         const sqlite = CapacitorSQLite as any;
-        await sqlite.requestPermission();
+        await sqlite.requestPermissions();
         this.setupDatabase();
       } catch (e) {
+        console.log(e);
         const alert = await this.alertCtrl.create({
           header: 'No DB access',
           message: 'This app can\'t work without Database access.',
