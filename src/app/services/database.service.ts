@@ -6,8 +6,8 @@ import '@capacitor-community/sqlite';
 import dbDump                        from '../../assets/dump.json';
 import { catchError, switchMap }     from 'rxjs/operators';
 import { Storage }                   from '@capacitor/storage';
-import { Device }                    from '@capacitor/device';
-import { CapacitorSQLite }            from '@capacitor-community/sqlite';
+import { Device }                      from '@capacitor/device';
+import { CapacitorSQLite, JsonSQLite } from '@capacitor-community/sqlite';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 
@@ -55,7 +55,7 @@ export class DatabaseService {
         if (!isReady) {
           return of({ values: [] });
         } else {
-          const statement = 'SELECT * FROM periodic;';
+          const statement = 'SELECT * FROM product-db;';
           return from(CapacitorSQLite.query({ statement, values: [] }));
         }
       }),
@@ -80,63 +80,82 @@ export class DatabaseService {
   }
 
   private async downloadDatabase(update = false) {
-    const isValid = await CapacitorSQLite.isJsonValid({ jsonstring: JSON.stringify(dbDump) });
-    if (isValid.result) {
-      this.dbName = dbDump.name;
-      await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
-      await CapacitorSQLite.importFromJson({ jsonstring: JSON.stringify(dbDump) });
-      await Storage.set({ key: DB_SETUP_KEY, value: '1' });
+    this.http.get('https://devdactic.fra1.digitaloceanspaces.com/tutorial/db.json').subscribe(async (jsonExport: JsonSQLite) => {
+      const jsonstring = JSON.stringify(jsonExport);
+      const isValid = await CapacitorSQLite.isJsonValid({ jsonstring });
 
-      // Your potential logic to detect offline changes later
-      if (!update) {
-        await CapacitorSQLite.createSyncTable({});
-      } else {
-        await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
+      if (isValid.result) {
+        this.dbName = jsonExport.database;
+        await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
+        await CapacitorSQLite.importFromJson({ jsonstring });
+        await Storage.set({ key: DB_SETUP_KEY, value: '1' });
+
+        // Your potential logic to detect offline changes later
+        if (!update) {
+          await CapacitorSQLite.createSyncTable({});
+        } else {
+          await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() })
+        }
+        this.dbReady.next(true);
       }
-      this.dbReady.next(true);
-    } else {
-      this.dbName = 'consume';
-      await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
-      await CapacitorSQLite.createConnection({ database: this.dbName });
-      await Storage.set({ key: DB_SETUP_KEY, value: '1' });
-
-      const statement = `
-        CREATE TABLE periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING);
-
-        CREATE TABLE periodic_item (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, value DOUBLE (10, 2), date INTEGER, list_id CHAR (36));
-
-        CREATE TRIGGER AutoGenerateGUID
-          AFTER INSERT
-          ON periodic
-          FOR EACH ROW WHEN (NEW.id IS NULL)
-        BEGIN
-          UPDATE periodic
-          SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-                           substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
-                           substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
-          WHERE rowid = NEW.rowid;
-        END;
-
-        CREATE TRIGGER AutoGenerateGUID1
-          AFTER INSERT
-          ON periodic_item
-          FOR EACH ROW WHEN (NEW.id IS NULL)
-        BEGIN
-          UPDATE periodic_item
-          SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-                           substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
-                           substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
-          WHERE rowid = NEW.rowid;
-        END;
-      `;
-      // if (!update) {
-      //   await CapacitorSQLite.createSyncTable({});
-      // } else {
-      //   await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
-      // }
-      await CapacitorSQLite.execute({ statements: statement, database: this.dbName });
-      this.dbReady.next(true);
-    }
+    });
+    // const isValid = await CapacitorSQLite.isJsonValid({ jsonstring: JSON.stringify(dbDump) });
+    // if (isValid.result) {
+    //   this.dbName = dbDump.name;
+    //   await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
+    //   await CapacitorSQLite.importFromJson({ jsonstring: JSON.stringify(dbDump) });
+    //   await Storage.set({ key: DB_SETUP_KEY, value: '1' });
+    //
+    //   // Your potential logic to detect offline changes later
+    //   if (!update) {
+    //     await CapacitorSQLite.createSyncTable({});
+    //   } else {
+    //     await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
+    //   }
+    //   this.dbReady.next(true);
+    // } else {
+    //   this.dbName = 'consume';
+    //   await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
+    //   await CapacitorSQLite.createConnection({ database: this.dbName });
+    //   await Storage.set({ key: DB_SETUP_KEY, value: '1' });
+    //
+    //   const statement = `
+    //     CREATE TABLE periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING);
+    //
+    //     CREATE TABLE periodic_item (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, value DOUBLE (10, 2), date INTEGER, list_id CHAR (36));
+    //
+    //     CREATE TRIGGER AutoGenerateGUID
+    //       AFTER INSERT
+    //       ON periodic
+    //       FOR EACH ROW WHEN (NEW.id IS NULL)
+    //     BEGIN
+    //       UPDATE periodic
+    //       SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+    //                        substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+    //                        substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+    //       WHERE rowid = NEW.rowid;
+    //     END;
+    //
+    //     CREATE TRIGGER AutoGenerateGUID1
+    //       AFTER INSERT
+    //       ON periodic_item
+    //       FOR EACH ROW WHEN (NEW.id IS NULL)
+    //     BEGIN
+    //       UPDATE periodic_item
+    //       SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+    //                        substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+    //                        substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+    //       WHERE rowid = NEW.rowid;
+    //     END;
+    //   `;
+    //   // if (!update) {
+    //   //   await CapacitorSQLite.createSyncTable({});
+    //   // } else {
+    //   //   await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
+    //   // }
+    //   await CapacitorSQLite.execute({ statements: statement, database: this.dbName });
+    //   this.dbReady.next(true);
+    // }
   }
 
 }
