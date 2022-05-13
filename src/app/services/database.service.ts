@@ -94,6 +94,37 @@ export class DatabaseService {
         await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
       }
       this.dbReady.next(true);
+    } else {
+      const statement = `
+        CREATE TABLE periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING);
+
+        CREATE TABLE periodic_item (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, value DOUBLE (10, 2), date INTEGER, list_id CHAR (36));
+
+        CREATE TRIGGER AutoGenerateGUID
+          AFTER INSERT
+          ON periodic
+          FOR EACH ROW WHEN (NEW.id IS NULL)
+        BEGIN
+          UPDATE periodic
+          SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+                           substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+                           substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+          WHERE rowid = NEW.rowid;
+        END;
+
+        CREATE TRIGGER AutoGenerateGUID1
+          AFTER INSERT
+          ON periodic_item
+          FOR EACH ROW WHEN (NEW.id IS NULL)
+        BEGIN
+          UPDATE periodic_item
+          SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+                           substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+                           substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+          WHERE rowid = NEW.rowid;
+        END;
+      `;
+      return CapacitorSQLite.execute({ statements: statement });
     }
   }
 
