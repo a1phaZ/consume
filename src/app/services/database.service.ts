@@ -128,6 +128,11 @@ export class DatabaseService {
           WHERE rowid = NEW.rowid;
         END;
       `;
+      if (!update) {
+        await CapacitorSQLite.createSyncTable({});
+      } else {
+        await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
+      }
       await CapacitorSQLite.execute({ statements: statement, database: this.dbName });
       this.dbReady.next(true);
     }
