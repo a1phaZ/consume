@@ -97,11 +97,10 @@ export class DatabaseService {
     } else {
       this.dbName = 'consume';
       await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
-      await CapacitorSQLite.open({ database: this.dbName });
+      await CapacitorSQLite.createConnection({ database: this.dbName });
       await Storage.set({ key: DB_SETUP_KEY, value: '1' });
 
       const statement = `
-        CREATE DATABASE consume;
         CREATE TABLE periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING);
 
         CREATE TABLE periodic_item (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, value DOUBLE (10, 2), date INTEGER, list_id CHAR (36));
@@ -130,11 +129,11 @@ export class DatabaseService {
           WHERE rowid = NEW.rowid;
         END;
       `;
-      if (!update) {
-        await CapacitorSQLite.createSyncTable({});
-      } else {
-        await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
-      }
+      // if (!update) {
+      //   await CapacitorSQLite.createSyncTable({});
+      // } else {
+      //   await CapacitorSQLite.setSyncDate({ syncdate: '' + new Date().getTime() });
+      // }
       await CapacitorSQLite.execute({ statements: statement, database: this.dbName });
       this.dbReady.next(true);
     }
