@@ -95,6 +95,9 @@ export class DatabaseService {
       }
       this.dbReady.next(true);
     } else {
+      this.dbName = 'consume';
+      await Storage.set({ key: DB_NAME_KEY, value: this.dbName });
+      await Storage.set({ key: DB_SETUP_KEY, value: '1' });
       const statement = `
         CREATE TABLE periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING);
 
@@ -124,7 +127,8 @@ export class DatabaseService {
           WHERE rowid = NEW.rowid;
         END;
       `;
-      return CapacitorSQLite.execute({ statements: statement });
+      await CapacitorSQLite.execute({ statements: statement });
+      this.dbReady.next(true);
     }
   }
 
