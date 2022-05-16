@@ -27,19 +27,19 @@ export class AppComponent {
       await loading.present();
       await this.databaseService.init();
       this.databaseService.dbReady
-      .pipe(
-        catchError(err => {
-          console.log(err);
-          loading.dismiss();
-          return of(err);
-        })
-      ).subscribe(isReady => {
-        if (isReady) {
-          loading.dismiss();
-          // this.statusBar.styleDefault();
-          // this.splashScreen.hide();
-        }
-      });
+        .pipe(
+          catchError(err => {
+            console.log('initializeApp', err);
+            loading.dismiss();
+            return of(err);
+          })
+        ).subscribe(isReady => {
+          if (isReady) {
+            loading.dismiss();
+            // this.statusBar.styleDefault();
+            // this.splashScreen.hide();
+          }
+        });
     });
   }
 }

@@ -60,7 +60,7 @@ export class DatabaseService {
         }
       }),
       catchError(err => {
-        console.log(err);
+        console.log('getPeriodicList', err);
         return of({values: []});
       })
     );
@@ -74,7 +74,7 @@ export class DatabaseService {
       this.downloadDatabase();
     } else {
       this.dbName = (await Storage.get({ key: DB_NAME_KEY })).value;
-      await CapacitorSQLite.open({ database: this.dbName });
+      await CapacitorSQLite.open({ database: `${this.dbName}.db` });
       this.dbReady.next(true);
     }
   }
