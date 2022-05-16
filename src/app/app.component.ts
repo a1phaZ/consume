@@ -12,6 +12,9 @@ import { of }                          from 'rxjs';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+
+  initPlugin: any;
+
   constructor(
     private platform: Platform,
     // private splashScreen: SplashScreen,
@@ -25,21 +28,25 @@ export class AppComponent {
     this.platform.ready().then(async () => {
       const loading = await this.loadingCtrl.create();
       await loading.present();
-      await this.databaseService.init();
-      this.databaseService.dbReady
-        .pipe(
-          catchError(err => {
-            console.log('initializeApp', err);
-            loading.dismiss();
-            return of(err);
-          })
-        ).subscribe(isReady => {
-          if (isReady) {
-            loading.dismiss();
-            // this.statusBar.styleDefault();
-            // this.splashScreen.hide();
-          }
-        });
+      this.databaseService.initializePlugin().then(ret => {
+        this.initPlugin = ret;
+        console.log('>>>> in App  this.initPlugin ' + this.initPlugin);
+      });
+    //   await this.databaseService.init();
+    //   this.databaseService.dbReady
+    //     .pipe(
+    //       catchError(err => {
+    //         console.log('initializeApp', err);
+    //         loading.dismiss();
+    //         return of(err);
+    //       })
+    //     ).subscribe(isReady => {
+    //       if (isReady) {
+    //         loading.dismiss();
+    //         // this.statusBar.styleDefault();
+    //         // this.splashScreen.hide();
+    //       }
+    //     });
     });
   }
 }
