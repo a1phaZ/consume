@@ -8,8 +8,8 @@ import { IPeriodicState }                 from '../../store/periodic/reducer/per
 import * as PeriodicActions               from '../../store/periodic/actions/periodic.actions';
 import { v4 as uuidv4 }                   from 'uuid';
 import { selectPeriodic }                 from '../../store/periodic/selectors/periodic.selectors';
-import { ModalService }                   from '../../services/modal.service';
-import { TFormField }                     from '../../models/TFormField';
+import { ModalService }            from '../../services/modal.service';
+import { EModalTypes, TFormField } from '../../models/TFormField';
 
 @Component({
 	selector: 'app-periodic',
@@ -20,6 +20,10 @@ export class PeriodicPage implements OnInit {
 
 	lists: Observable<TPeriodicItem[]>;
 	periodic$ = this.store.select(selectPeriodic);
+	typeCategory = EModalTypes.category;
+	typeItem = EModalTypes.item;
+
+	actionType = null;
 
 	constructor(
 		private periodicService: PeriodicService,
@@ -31,8 +35,10 @@ export class PeriodicPage implements OnInit {
 		});
 
 		this.modalService.modalData.subscribe((data) => {
+			console.log(data);
 			if (!data) {return;}
-			this.addGroup(data);
+			if (this.actionType === EModalTypes.category) {this.addGroup(data);}
+			if (this.actionType === EModalTypes.item) { this.addItem(data);}
 		});
 	}
 
@@ -44,23 +50,19 @@ export class PeriodicPage implements OnInit {
 		return this.periodicService.calcTotal([...list, ...other.flat()]);
 	}
 
-	showModal() {
-		const fields: TFormField[] = [
-			{
-				name: 'title',
-				label: 'Название группы',
-				placeholder: 'Введите название',
-				type: 'text',
-				value: null,
-			}
-		];
-
-		this.modalService.presentModal(fields);
+	showModal(type: EModalTypes, id = null) {
+		console.log(type);
+		const fields: TFormField[] = this.modalService.getFields(type);
+		if (fields.length > 0) {
+			this.actionType = type;
+			this.modalService.presentModal(fields, {id});
+		}
 	}
 
 	addGroup(data) {
 		const id = uuidv4();
-		this.store.dispatch(PeriodicActions.addPeriodic({id, ...data}));
+		console.log('id', id);
+		this.store.dispatch(PeriodicActions.addPeriodic({...data, id}));
 
 		// if (key === 'default') {
 		//   this.periodicService.setList(key, {
@@ -78,16 +80,16 @@ export class PeriodicPage implements OnInit {
 		// });
 	}
 
-	addItem(id: string) {
+	addItem({id, title, sum}) {
 		this.store.dispatch(PeriodicActions.addPeriodicItem({
 			periodicId: id,
 			id: uuidv4(),
 			sum: {
-				value: 1000,
+				value: sum,
 				income: false
 			},
 			date: +new Date(),
-			title: 'test periodic item'
+			title
 		}));
 	}
 }

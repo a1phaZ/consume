@@ -10,6 +10,7 @@ import { TFormField }                                      from '../../models/TF
 })
 export class FormModalPage implements OnInit {
 	@Input() fields: TFormField[];
+	@Input() data: any;
 	formGroup: FormGroup;
 	date: any;
 
@@ -48,6 +49,6 @@ export class FormModalPage implements OnInit {
 	}
 
 	async close(value) {
-		await this.modalService.dismiss(value);
+		await this.modalService.dismiss({...value, ...this.data});
 	}
 }
