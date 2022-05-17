@@ -2,7 +2,7 @@ export type TFormField = {
 	label: string;
 	name: string;
 	placeholder: string;
-	type: 'text' | 'number';
+	type: 'text' | 'number' | 'date';
 	value: string | number | null;
 };
 

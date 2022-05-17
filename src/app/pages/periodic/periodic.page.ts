@@ -31,6 +31,7 @@ export class PeriodicPage implements OnInit {
 		private store: Store<{ periodic: IPeriodicState }>,
 	) {
 		this.modalService.modalData.subscribe((data) => {
+			console.log('add modal data', data);
 			if (!data) {return;}
 			if (this.actionType === EModalTypes.category) {this.addGroup(data);}
 			if (this.actionType === EModalTypes.item) { this.addItem(data);}
@@ -58,7 +59,7 @@ export class PeriodicPage implements OnInit {
 		this.store.dispatch(PeriodicActions.addPeriodic({...data, id}));
 	}
 
-	addItem({id, title, sum, income}) {
+	addItem({id, title, sum, income, date}) {
 		this.store.dispatch(PeriodicActions.addPeriodicItem({
 			periodicId: id,
 			id: uuidv4(),
@@ -66,7 +67,7 @@ export class PeriodicPage implements OnInit {
 				value: sum,
 				income: !!income
 			},
-			date: +new Date(),
+			date: +new Date(date),
 			title
 		}));
 	}

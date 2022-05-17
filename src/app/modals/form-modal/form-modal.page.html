@@ -1,42 +1,26 @@
 <ion-header collapse="fade">
-  <ion-toolbar>
-    <ion-button slot="start" [fill]="'clear'" class="back-button-wrapper" (click)="close(null)">
-      <app-custom-icon [icon]="'back-button'"></app-custom-icon>
-    </ion-button>
-    <ion-title>Header</ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-button slot="start" [fill]="'clear'" class="back-button-wrapper" (click)="close(null)">
+			<app-custom-icon [icon]="'back-button'"></app-custom-icon>
+		</ion-button>
+		<ion-title>Header</ion-title>
+	</ion-toolbar>
 </ion-header>
 <ion-content fullscreen="true">
 
-  <section class="form__wrapper">
-    <form [formGroup]="formGroup">
-		<app-input *ngFor="let field of fields"
-				   [formGroup]="formGroup"
-				   [field] = "field"></app-input>
+	<section class="form__wrapper">
+		<form [formGroup]="formGroup">
+			<ng-container *ngFor="let field of fields">
+				<app-input *ngIf="field.type !== 'date'"
+						   [formGroup]="formGroup"
+						   [field]="field"></app-input>
+				<app-date-field *ngIf="field.type === 'date'"
+								[field]="field"
+								[formGroup]="formGroup"></app-date-field>
+			</ng-container>
 
-<!--		<app-input [formGroup]="formGroup" label="Приход" name="income" placeholder="Сумма прихода"></app-input>-->
-<!--      <app-input [formGroup]="formGroup" label="Остаток на начало периода" name="balance" placeholder="Остаток на начало периода"></app-input>-->
-<!--      <app-input [formGroup]="formGroup" label="Кол-во дней в периоде" name="daysCount" placeholder="Кол-во дней в периоде"></app-input>-->
-
-<!--      <ion-item>-->
-<!--        <ion-label position="floating">Pick date</ion-label>-->
-<!--        <ion-input-->
-<!--          value="{{ formGroup.value.date | date:'dd.MM.yyyy' }}"-->
-<!--          id="date"-->
-<!--          class="ion-text-end"-->
-<!--        ></ion-input>-->
-<!--        <ion-popover trigger="date" size="cover">-->
-<!--          <ng-template>-->
-<!--            <ion-datetime-->
-<!--              presentation="date"-->
-<!--              formControlName="date"-->
-<!--              locale="ru-RU"-->
-<!--            ></ion-datetime>-->
-<!--          </ng-template>-->
-<!--        </ion-popover>-->
-<!--      </ion-item>-->
-      <ion-button (click)="submit($event)" disabled="{{formGroup.invalid}}">Сохранить</ion-button>
-    </form>
-  </section>
+			<ion-button (click)="submit($event)" disabled="{{formGroup.invalid}}">Сохранить</ion-button>
+		</form>
+	</section>
 
 </ion-content>

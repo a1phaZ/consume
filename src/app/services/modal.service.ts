@@ -35,6 +35,13 @@ export class ModalService {
 				placeholder: 'Введите сумму',
 				type: 'number',
 				value: null,
+			},
+			{
+				name: 'date',
+				label: 'Дата платежа',
+				placeholder: null,
+				type: 'date',
+				value: null
 			}
 		]
 	};
