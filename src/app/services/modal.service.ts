@@ -36,14 +36,6 @@ export class ModalService {
 				type: 'number',
 				value: null,
 			}
-		// export type TPeriodicListItem = {
-		// 	id?: string;
-		// 	title: string;
-		// 	date: number;
-		// 	sum: { value: number; income?: boolean };
-		// 	icon?: string;
-		// 	periodicId: string;
-		// };
 		]
 	};
 

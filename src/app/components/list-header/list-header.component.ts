@@ -18,7 +18,6 @@ export class ListHeaderComponent implements OnInit {
   ngOnInit() {}
 
   _buttonClick($event) {
-    console.log($event);
     this.buttonClick.emit($event);
   }
 }

@@ -24,7 +24,6 @@ export class ButtonsPanelComponent implements OnInit {
       icon: 'ellipsis-vertical-outline',
       buttonClass: 'clear',
       click: async (ev) => {
-        console.log(ev);
         ev.stopPropagation();
         await this.popoverService.presentPopover(ev);
       }

@@ -21,14 +21,6 @@ export class FormModalPage implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.formGroup = this.fb.group({
-		// 	income: new FormControl(null, [Validators.required]),
-		// 	balance: new FormControl(null, [Validators.required]),
-		// 	daysCount: new FormControl(null, [Validators.required]), // TODO Подставлять кол-во дней исходя из настроек
-		// 	date: new FormControl(new Date().toISOString(), [Validators.required]),
-		// });
-
-		console.log(this.fields);
 		const controlsConfig = this.fields.reduce(
 			(acc, field: TFormField) => ({
 					...acc,
@@ -44,11 +36,7 @@ export class FormModalPage implements OnInit {
 		await this.close(this.formGroup.value);
 	}
 
-	modelChange(event, key) {
-		this.formGroup.patchValue({[key]: event.detail.value});
-	}
-
 	async close(value) {
-		await this.modalService.dismiss({...value, ...this.data});
+		await this.modalService.dismiss(!value ? null : {...value, ...this.data});
 	}
 }

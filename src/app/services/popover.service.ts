@@ -26,8 +26,6 @@ export class PopoverService {
 
     const { data: { action } } = await popover.onDidDismiss();
 
-    console.log(action);
-
     this.action$.next(action);
   }
 }

@@ -30,12 +30,7 @@ export class PeriodicPage implements OnInit {
 		private modalService: ModalService,
 		private store: Store<{ periodic: IPeriodicState }>,
 	) {
-		this.periodic$.subscribe(data => {
-			console.log('periodic data', data);
-		});
-
 		this.modalService.modalData.subscribe((data) => {
-			console.log(data);
 			if (!data) {return;}
 			if (this.actionType === EModalTypes.category) {this.addGroup(data);}
 			if (this.actionType === EModalTypes.item) { this.addItem(data);}
@@ -51,7 +46,6 @@ export class PeriodicPage implements OnInit {
 	}
 
 	showModal(type: EModalTypes, id = null) {
-		console.log(type);
 		const fields: TFormField[] = this.modalService.getFields(type);
 		if (fields.length > 0) {
 			this.actionType = type;
@@ -61,32 +55,16 @@ export class PeriodicPage implements OnInit {
 
 	addGroup(data) {
 		const id = uuidv4();
-		console.log('id', id);
 		this.store.dispatch(PeriodicActions.addPeriodic({...data, id}));
-
-		// if (key === 'default') {
-		//   this.periodicService.setList(key, {
-		//     title: 'Подписки',
-		//     list: [],
-		//     id: 'subscribe',
-		//   });
-		//
-		//   return;
-		// }
-		// this.periodicService.setList(key, {
-		//   title: 'Связь',
-		//   sum: {value: 330},
-		//   date: +new Date(2022, 3, 23),
-		// });
 	}
 
-	addItem({id, title, sum}) {
+	addItem({id, title, sum, income}) {
 		this.store.dispatch(PeriodicActions.addPeriodicItem({
 			periodicId: id,
 			id: uuidv4(),
 			sum: {
 				value: sum,
-				income: false
+				income: !!income
 			},
 			date: +new Date(),
 			title
