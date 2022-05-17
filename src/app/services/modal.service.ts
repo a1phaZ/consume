@@ -1,27 +1,37 @@
 import { Injectable }      from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormModalPage }   from '../modals/form-modal/form-modal.page';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ModalService {
 
-  constructor(
-    private modalCtrl: ModalController,
-  ) { }
+	modalData: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  async presentModal() {
-    const modal = await this.modalCtrl.create({
-      component: FormModalPage,
-      cssClass: 'my-custom-class',
-      mode: 'ios',
-      canDismiss: true,
-    });
-    return await modal.present();
-  }
+	constructor(
+		private modalCtrl: ModalController,
+	) {}
 
-  async dismiss(data) {
-    return this.modalCtrl.dismiss(data);
-  }
+	async presentModal(fields = [], component = FormModalPage) {
+		const modal = await this.modalCtrl.create({
+			component,
+			cssClass: 'my-custom-class',
+			mode: 'ios',
+			canDismiss: true,
+			componentProps: {
+				fields
+			}
+		});
+		modal.onWillDismiss()
+			.then(({data})=> {
+				this.modalData.next(data);
+			});
+		return await modal.present();
+	}
+
+	async dismiss(data) {
+		return this.modalCtrl.dismiss(data);
+	}
 }

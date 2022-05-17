@@ -1,5 +1,5 @@
 <ng-container [formGroup]="formGroup">
-  <label class="input__label">{{label}}</label>
-  <input class="input__field" type="text" placeholder="{{placeholder}}" formControlName="{{name}}"/>
+  <label class="input__label">{{field.label}}</label>
+  <input class="input__field" type="{{field.type}}" placeholder="{{field.placeholder}}" formControlName="{{field.name}}"/>
 </ng-container>
 

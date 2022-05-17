@@ -11,6 +11,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalService }                                  from './services/modal.service';
 import { PopoverService }                                from './services/popover.service';
 import { HttpClientModule }                              from '@angular/common/http';
+import { StoreModule }                                   from '@ngrx/store';
+import { periodicReducer }                               from './store/periodic/reducer/periodic.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +24,10 @@ import { HttpClientModule }                              from '@angular/common/h
     ComponentsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({
+      periodic: periodicReducer
+    })
   ],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, FormBuilder, ModalService, PopoverService],
   bootstrap: [AppComponent],

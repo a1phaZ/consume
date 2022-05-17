@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup }                from '@angular/forms';
+import { TFormField }               from '../../models/TFormField';
 
 @Component({
   selector: 'app-input',
@@ -9,9 +10,8 @@ import { FormGroup }                from '@angular/forms';
 export class InputComponent implements OnInit {
 
   @Input() formGroup: FormGroup;
-  @Input() label: string;
-  @Input() name: string;
-  @Input() placeholder: string;
+
+  @Input() field: TFormField;
 
   constructor() { }
 
