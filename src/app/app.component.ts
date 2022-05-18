@@ -48,6 +48,7 @@ export class AppComponent {
 	      await db.setSyncDate(new Date().toISOString());
 	      await this.databaseService.addData();
 	      this.databaseService.dbReady.next(true);
+		  console.log(await this.databaseService.getPeriodicList());
 	      console.log(ret);
 	    }
 	  } catch (e) {
