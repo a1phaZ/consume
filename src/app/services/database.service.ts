@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, from, of} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import '@capacitor-community/sqlite';
-import {catchError, switchMap} from 'rxjs/operators';
 import {Device} from '@capacitor/device';
 import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite';
 
@@ -64,44 +63,6 @@ export class DatabaseService {
 		}
 	}
 
-	// async init(): Promise<void> {
-	// 	const info = await Device.getInfo();
-	//
-	// 	if (info?.platform === 'android') {
-	// 		try {
-	// 			this.setupDatabase();
-	// 		} catch (e) {
-	// 			console.log(e);
-	// 			const alert = await this.alertCtrl.create({
-	// 				header: 'No DB access',
-	// 				message: 'This app can\'t work without Database access.',
-	// 				buttons: ['OK']
-	// 			});
-	// 			await alert.present();
-	// 		}
-	// 	} else {
-	// 		this.setupDatabase();
-	// 	}
-	// }
-
-	getPeriodicList() {
-		return this.dbReady.pipe(
-			switchMap(async isReady => {
-				if (!isReady) {
-					return of({values: []});
-				} else {
-					const statement = 'SELECT * FROM periodic;';
-					const ret = await this.db.query(statement, []);
-					console.log('get data', ret);
-					return from(this.db.query(statement, []));
-				}
-			}),
-			catchError(err => {
-				console.log('getPeriodicList', err);
-				return of({values: []});
-			})
-		);
-	}
 
 	async getData(tableName) {
 		const statement = `SELECT *
@@ -109,49 +70,21 @@ export class DatabaseService {
 		return await this.db.query(statement, []);
 	}
 
-	async addData() {
+	async addData(tableName, values) {
 		const sqlcmd =
-			'INSERT INTO periodic (title) VALUES (?);';
-		const values: Array<any> = ['test title'];
-		await this.db.run(sqlcmd, values);
+			`INSERT INTO ${tableName} (${this.getObjectKeys(values).join(',')})
+			 VALUES (${this.getObjectKeys(values).length});`;
+		await this.db.run(sqlcmd, this.getObjectValues(values));
 		return true;
 	}
 
-	// private async setupDatabase(update = false) {
-	//
-	// 	const dbSetupDone = await Storage.get({key: DB_SETUP_KEY});
-	//
-	// 	if (!dbSetupDone.value) {
-	// 		this.downloadDatabase();
-	// 	} else {
-	// 		this.dbName = (await Storage.get({key: DB_NAME_KEY})).value;
-	// 		await CapacitorSQLite.open({database: `${this.dbName}.db`});
-	// 		this.dbReady.next(true);
-	// 	}
-	// }
+	getObjectKeys(v) {
+		return Object.keys(v);
+	}
 
-	// private async downloadDatabase(update = false) {
-	// 	this.http.get('https://devdactic.fra1.digitaloceanspaces.com/tutorial/db.json').subscribe(async (jsonExport: JsonSQLite) => {
-	// 		const jsonstring = JSON.stringify(jsonExport);
-	// 		const isValid = await CapacitorSQLite.isJsonValid({jsonstring});
-	//
-	// 		if (isValid.result) {
-	// 			this.dbName = jsonExport.database;
-	// 			await Storage.set({key: DB_NAME_KEY, value: this.dbName});
-	// 			await CapacitorSQLite.importFromJson({jsonstring});
-	// 			await Storage.set({key: DB_SETUP_KEY, value: '1'});
-	//
-	// 			// Your potential logic to detect offline changes later
-	// 			if (!update) {
-	// 				await CapacitorSQLite.createSyncTable({});
-	// 			} else {
-	// 				await CapacitorSQLite.setSyncDate({syncdate: '' + new Date().getTime()});
-	// 			}
-	// 			this.dbReady.next(true);
-	// 		}
-	// 	});
-	// }
-
+	getObjectValues(v) {
+		return this.getObjectKeys(v).map((key) => v[key]);
+	}
 }
 
 // eslint-disable
