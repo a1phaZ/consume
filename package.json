@@ -36,6 +36,7 @@
     "@taiga-ui/addon-mobile": "^2.45.0",
     "@taiga-ui/cdk": "^2.45.0",
     "@taiga-ui/core": "^2.45.0",
+    "@taiga-ui/i18n": "^2.45.0",
     "@taiga-ui/icons": "^2.45.0",
     "@taiga-ui/kit": "^2.45.0",
     "@tinkoff/ng-polymorpheus": "^3.1.12",

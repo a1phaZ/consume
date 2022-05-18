@@ -1,4 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import {TUI_LANGUAGE, TUI_RUSSIAN_LANGUAGE} from '@taiga-ui/i18n';
 import { BrowserModule }                    from '@angular/platform-browser';
 import { RouteReuseStrategy }               from '@angular/router';
 
@@ -18,6 +19,7 @@ import { BrowserAnimationsModule }                                from '@angular
 import { TuiMobileCalendarDialogModule, TuiMobileCalendarModule } from '@taiga-ui/addon-mobile';
 import { TuiInputDateModule }                                     from '@taiga-ui/kit';
 import { PolymorpheusModule }                                     from '@tinkoff/ng-polymorpheus';
+import { of }                                                     from 'rxjs';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -41,7 +43,16 @@ import { PolymorpheusModule }                                     from '@tinkoff
 		TuiInputDateModule,
 		PolymorpheusModule
 	],
-	providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, FormBuilder, ModalService, PopoverService],
+	providers: [
+		{provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+		FormBuilder,
+		ModalService,
+		PopoverService,
+		{
+			provide: TUI_LANGUAGE,
+			useValue: of(TUI_RUSSIAN_LANGUAGE),
+		},
+	],
 	bootstrap: [AppComponent],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
