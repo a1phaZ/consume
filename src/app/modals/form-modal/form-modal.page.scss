@@ -5,19 +5,22 @@
 }
 
 .form__wrapper {
-  padding-left: 60px;
-  padding-right: 60px;
+  //padding-left: 60px;
+  //padding-right: 60px;
 
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    app-input {
-      width: 100%;
-      margin-bottom: 16px;
-    }
-  }
+  //form {
+  //  display: flex;
+  //  flex-direction: column;
+  //  align-items: center;
+  //
+  //  app-input {
+  //    width: 100%;
+  //    margin-bottom: 16px;
+  //  }
+  //}
 
 }
 
+.z11 {
+	z-index: 11;
+}

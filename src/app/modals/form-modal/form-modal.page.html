@@ -8,19 +8,34 @@
 </ion-header>
 <ion-content fullscreen="true">
 
-	<section class="form__wrapper">
+	<section class="form__wrapper tui-container tui-container_fullwidth">
 		<form [formGroup]="formGroup">
-			<ng-container *ngFor="let field of fields">
-				<app-input *ngIf="field.type !== 'date'"
-						   [formGroup]="formGroup"
-						   [field]="field"></app-input>
-				<app-date-field *ngIf="field.type === 'date'"
-								[field]="field"
-								[formGroup]="formGroup"></app-date-field>
-			</ng-container>
+			<div class="tui-row tui-row_adaptive">
+				<div class="tui-col_xs-12">
+					<div class="tui-form__row tui-row_adaptive">
+						<ng-container *ngFor="let field of fields">
+							<app-input *ngIf="field.type !== 'date'"
+									   [formGroup]="formGroup"
+									   [field]="field"></app-input>
+							<app-date-field *ngIf="field.type === 'date'"
+											[formGroup]="formGroup"
+											[field]="field"></app-date-field>
+						</ng-container>
+					</div>
+				</div>
+			</div>
+			<!--			<ng-container *ngFor="let field of fields">-->
+			<!--				<app-input *ngIf="field.type !== 'date'"-->
+			<!--						   [formGroup]="formGroup"-->
+			<!--						   [field]="field"></app-input>-->
+			<!--				<app-date-field *ngIf="field.type === 'date'"-->
+			<!--								[field]="field"-->
+			<!--								[formGroup]="formGroup"></app-date-field>-->
+			<!--			</ng-container>-->
 
-			<ion-button (click)="submit($event)" disabled="{{formGroup.invalid}}">Сохранить</ion-button>
+			<button tuiButton (click)="submit($event)" [disabled]="formGroup.invalid">Сохранить</button>
 		</form>
 	</section>
-
 </ion-content>
+<tui-root class="z11"></tui-root>
+

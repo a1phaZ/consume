@@ -1,6 +1,27 @@
 <ng-container [formGroup]="formGroup">
-	<label class="input__label">{{field.label}}</label>
-	<input class="input__field" type="{{field.type}}" placeholder="{{field.placeholder}}"
-		   formControlName="{{field.name}}"/>
+<!--	<label class="input__label">{{field.label}}</label>-->
+<!--	<input class="input__field" type="{{field.type}}" placeholder="{{field.placeholder}}"-->
+<!--		   formControlName="{{field.name}}"/>-->
+	<tui-input
+		*ngIf="field.type === 'text'"
+		tuiTextfieldExampleText="{{field.placeholder}}"
+		formControlName="{{field.name}}"
+		tuiHintContent="{{field.placeholder}}"
+	>
+		{{field.label}}
+		<span class="tui-required"></span>
+	</tui-input>
+	<tui-input-number
+		*ngIf="field.type === 'number'"
+		formControlName="{{field.name}}"
+		tuiHintContent="{{field.placeholder}}"
+		[postfix]="'RUB' | tuiCurrency"
+	>
+		{{field.label}}
+		<span class="tui-required"></span>
+	</tui-input-number>
+	<tui-field-error
+		formControlName="{{field.name}}"
+	></tui-field-error>
 </ng-container>
 

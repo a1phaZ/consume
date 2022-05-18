@@ -8,15 +8,17 @@ import { PeriodicPageRoutingModule } from './periodic-routing.module';
 
 import { PeriodicPage }   from './periodic.page';
 import { HomePageModule } from '../home/home.module';
+import { TuiRootModule }  from '@taiga-ui/core';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PeriodicPageRoutingModule,
-    HomePageModule
-  ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		PeriodicPageRoutingModule,
+		HomePageModule,
+		TuiRootModule
+	],
   declarations: [PeriodicPage]
 })
 export class PeriodicPageModule {}
