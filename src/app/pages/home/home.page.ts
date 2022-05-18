@@ -59,22 +59,4 @@ export class HomePage implements AfterViewInit {
 		// });
 	}
 
-	// async init() {
-	//   try {
-	//     const db = await this.databaseService
-	//       .createConnection('consume', false, 'no-encryption', 1);
-	//     if (db) {
-	//       await db.open();
-	//       const ret: any = await db.execute(createSchema);
-	//       await db.createSyncTable();
-	//       await db.setSyncDate(new Date().toISOString());
-	//       await this.databaseService.addData();
-	//       this.databaseService.dbReady.next(true);
-	//       console.log(ret);
-	//     }
-	//   } catch (e) {
-	//     console.log('home init', e);
-	//   }
-	// }
-
 }

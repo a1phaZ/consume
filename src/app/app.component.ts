@@ -2,7 +2,7 @@ import { Component }                   from '@angular/core';
 import { LoadingController, Platform } from '@ionic/angular';
 // import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 // import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { DatabaseService }             from './services/database.service';
+import { createSchema, DatabaseService } from './services/database.service';
 
 @Component({
 	selector: 'app-root',
@@ -27,26 +27,31 @@ export class AppComponent {
 		this.platform.ready().then(async () => {
 			const loading = await this.loadingCtrl.create();
 			await loading.present();
-			this.databaseService.initializePlugin().then(ret => {
+			this.databaseService.initializePlugin().then(async ret => {
 				this.initPlugin = ret;
-				loading.dismiss();
+				await loading.dismiss();
 				console.log('>>>> in App  this.initPlugin ' + this.initPlugin);
+
+				await this.initDB();
 			});
-			//   await this.databaseService.init();
-			//   this.databaseService.dbReady
-			//     .pipe(
-			//       catchError(err => {
-			//         console.log('initializeApp', err);
-			//         loading.dismiss();
-			//         return of(err);
-			//       })
-			//     ).subscribe(isReady => {
-			//       if (isReady) {
-			//         loading.dismiss();
-			//         // this.statusBar.styleDefault();
-			//         // this.splashScreen.hide();
-			//       }
-			//     });
 		});
+	}
+
+	async initDB() {
+	  try {
+	    const db = await this.databaseService
+	      .createConnection('consume', false, 'no-encryption', 1);
+	    if (db) {
+	      await db.open();
+	      const ret: any = await db.execute(createSchema);
+	      await db.createSyncTable();
+	      await db.setSyncDate(new Date().toISOString());
+	      await this.databaseService.addData();
+	      this.databaseService.dbReady.next(true);
+	      console.log(ret);
+	    }
+	  } catch (e) {
+	    console.log('home init', e);
+	  }
 	}
 }
