@@ -11,7 +11,13 @@
   <section class="item__total" *ngIf="item.sum">
     <div class="item__value {{item.sum.income ? 'income' : null}}">
 <!--      <span class="value__sign">{{item.sum.income ? '+' : '-'}}</span>-->
-      {{item.sum.value | currency:"RUB":"symbol-narrow":'.2-2':'ru'}}
+		<tui-money class="balance"
+				   [colored]="true"
+				   [currency]="'RUB'"
+				   [value]="getValue(item.sum)"
+				   [decimal]="'always'">
+
+		</tui-money>
     </div>
   </section>
   <section class="item__total" *ngIf="item.value">

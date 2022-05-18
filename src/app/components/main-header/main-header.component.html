@@ -1,5 +1,12 @@
 <div class="main__header">
   <span class="greeting">{{greeting}}</span>
-  <span class="balance">{{balance | currency:"RUB":"symbol-narrow"}}</span>
+	<tui-money class="balance"
+	[colored]="true"
+	[currency]="'RUB'"
+	[value]="balance"
+	[decimal]="'always'">
+
+	</tui-money>
+<!--  <span class="balance">{{balance | currency:"RUB":"symbol-narrow"}}</span>-->
   <span class="description">{{description}}</span>
 </div>

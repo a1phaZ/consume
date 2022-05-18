@@ -3,16 +3,22 @@ import { TListItem }                from '../list/list.component';
 import { TSettingItem }             from '../../services/settings.service';
 
 @Component({
-  selector: 'app-list-item',
-  templateUrl: './list-item.component.html',
-  styleUrls: ['./list-item.component.scss'],
+	selector: 'app-list-item',
+	templateUrl: './list-item.component.html',
+	styleUrls: ['./list-item.component.scss'],
 })
 export class ListItemComponent implements OnInit {
 
-  @Input() item: TListItem | TSettingItem;
+	@Input() item: TListItem | TSettingItem;
 
-  constructor() { }
+	constructor() {
+	}
 
-  ngOnInit() {}
+	ngOnInit() {
+	}
+
+	getValue(sumObject) {
+		return !!sumObject.income ? sumObject.value : -1 * sumObject.value;
+	}
 
 }

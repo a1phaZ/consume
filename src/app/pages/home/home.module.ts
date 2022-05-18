@@ -14,6 +14,7 @@ import { ListHeaderComponent }   from '../../components/list-header/list-header.
 import { MainContentComponent }  from '../../components/main-content/main-content.component';
 import { PipesModule }           from '../../pipes/pipes.module';
 import { FormModalPageModule }   from '../../modals/form-modal/form-modal.module';
+import { TuiMoneyModule }        from '@taiga-ui/addon-commerce';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FormModalPageModule }   from '../../modals/form-modal/form-modal.module
 		IonicModule,
 		HomePageRoutingModule,
 		PipesModule,
-    FormModalPageModule,
+		FormModalPageModule,
+		TuiMoneyModule,
 	],
   exports: [
     ListComponent,

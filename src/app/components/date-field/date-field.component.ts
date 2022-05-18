@@ -18,8 +18,8 @@ export class DateFieldComponent {
 
 	@Input() formGroup: FormGroup;
 	@Input() field: TFormField;
-
-	private readonly control = new FormControl(new TuiDay(2020, 9, 3));
+	now = new Date();
+	private readonly control = new FormControl(new TuiDay(this.now.getFullYear(), this.now.getMonth(), this.now.getDate()));
 
 	private readonly dialog$: Observable<TuiDay>;
 
@@ -67,6 +67,8 @@ export class DateFieldComponent {
 			return 'Choose a date';
 		}
 
+		this.patchDate(this.control.value);
+
 		const {month, day, year} = value as TuiDay;
 
 		return `${months[month]} ${day}, ${year}`;
@@ -75,11 +77,14 @@ export class DateFieldComponent {
 	onClick(): void {
 		this.dialog$.subscribe(value => {
 			this.control.setValue(value);
-			this.formGroup.patchValue({[this.field.name]: this.formattedDate(value)});
 		});
 	}
 
 	formattedDate(value: TuiDay) {
 		return +new Date(value.year, value.month, value.day);
+	}
+
+	patchDate(value) {
+		this.formGroup.patchValue({[this.field.name]: this.formattedDate(value)});
 	}
 }
