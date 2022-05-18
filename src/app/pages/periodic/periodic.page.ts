@@ -10,6 +10,7 @@ import { v4 as uuidv4 }                   from 'uuid';
 import { selectPeriodic }                 from '../../store/periodic/selectors/periodic.selectors';
 import { ModalService }            from '../../services/modal.service';
 import { EModalTypes, TFormField } from '../../models/TFormField';
+import {DatabaseService} from '../../services/database.service';
 
 @Component({
 	selector: 'app-periodic',
@@ -25,13 +26,15 @@ export class PeriodicPage implements OnInit {
 
 	actionType = null;
 
+	// list$: any = this.dbService.getPeriodicList();
+
 	constructor(
 		private periodicService: PeriodicService,
 		private modalService: ModalService,
 		private store: Store<{ periodic: IPeriodicState }>,
+		private dbService: DatabaseService,
 	) {
 		this.modalService.modalData.subscribe((data) => {
-			console.log('add modal data', data);
 			if (!data) {return;}
 			if (this.actionType === EModalTypes.category) {this.addGroup(data);}
 			if (this.actionType === EModalTypes.item) { this.addItem(data);}
@@ -40,6 +43,12 @@ export class PeriodicPage implements OnInit {
 
 	ngOnInit() {
 		// this.lists = this.periodicService.list;
+		this.dbService.getData('periodic')
+			.then(({values}) => {
+				if (values.length > 0) {
+					values.forEach((value) => this.store.dispatch(PeriodicActions.addPeriodic({...value})));
+				}
+			});
 	}
 
 	calcTotal(list: TListItem[] | TSettingItem[], ...other): string {

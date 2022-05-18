@@ -1,17 +1,9 @@
-import { Injectable }                                                        from '@angular/core';
-import { BehaviorSubject, from, of }                                         from 'rxjs';
-import { HttpClient }                                                        from '@angular/common/http';
-import { AlertController }                                                   from '@ionic/angular';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, from, of} from 'rxjs';
 import '@capacitor-community/sqlite';
-import { catchError, switchMap }                                             from 'rxjs/operators';
-import { Storage }                                                           from '@capacitor/storage';
-import { Device }                                                            from '@capacitor/device';
-import { CapacitorSQLite, JsonSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-
-const DB_SETUP_KEY = 'first_db_setup';
-const DB_NAME_KEY = 'db_name';
+import {catchError, switchMap} from 'rxjs/operators';
+import {Device} from '@capacitor/device';
+import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite';
 
 @Injectable({
 	providedIn: 'root'
@@ -27,10 +19,7 @@ export class DatabaseService {
 	isService: boolean;
 	private db: SQLiteDBConnection;
 
-	constructor(
-		private http: HttpClient,
-		private alertCtrl: AlertController
-	) {
+	constructor() {
 	}
 
 	async initializePlugin(): Promise<unknown> {
@@ -75,34 +64,35 @@ export class DatabaseService {
 		}
 	}
 
-	async init(): Promise<void> {
-		const info = await Device.getInfo();
-
-		if (info?.platform === 'android') {
-			try {
-				this.setupDatabase();
-			} catch (e) {
-				console.log(e);
-				const alert = await this.alertCtrl.create({
-					header: 'No DB access',
-					message: 'This app can\'t work without Database access.',
-					buttons: ['OK']
-				});
-				await alert.present();
-			}
-		} else {
-			this.setupDatabase();
-		}
-	}
+	// async init(): Promise<void> {
+	// 	const info = await Device.getInfo();
+	//
+	// 	if (info?.platform === 'android') {
+	// 		try {
+	// 			this.setupDatabase();
+	// 		} catch (e) {
+	// 			console.log(e);
+	// 			const alert = await this.alertCtrl.create({
+	// 				header: 'No DB access',
+	// 				message: 'This app can\'t work without Database access.',
+	// 				buttons: ['OK']
+	// 			});
+	// 			await alert.present();
+	// 		}
+	// 	} else {
+	// 		this.setupDatabase();
+	// 	}
+	// }
 
 	getPeriodicList() {
 		return this.dbReady.pipe(
-			switchMap(isReady => {
+			switchMap(async isReady => {
 				if (!isReady) {
 					return of({values: []});
 				} else {
 					const statement = 'SELECT * FROM periodic;';
-					console.log('get data');
+					const ret = await this.db.query(statement, []);
+					console.log('get data', ret);
 					return from(this.db.query(statement, []));
 				}
 			}),
@@ -113,88 +103,99 @@ export class DatabaseService {
 		);
 	}
 
+	async getData(tableName) {
+		const statement = `SELECT *
+						   FROM ${tableName};`;
+		return await this.db.query(statement, []);
+	}
+
 	async addData() {
 		const sqlcmd =
 			'INSERT INTO periodic (title) VALUES (?);';
 		const values: Array<any> = ['test title'];
-		console.log('add data');
-		const ret = await this.db.run(sqlcmd, values);
-		console.log(ret);
+		await this.db.run(sqlcmd, values);
 		return true;
 	}
 
-	private async setupDatabase(update = false) {
+	// private async setupDatabase(update = false) {
+	//
+	// 	const dbSetupDone = await Storage.get({key: DB_SETUP_KEY});
+	//
+	// 	if (!dbSetupDone.value) {
+	// 		this.downloadDatabase();
+	// 	} else {
+	// 		this.dbName = (await Storage.get({key: DB_NAME_KEY})).value;
+	// 		await CapacitorSQLite.open({database: `${this.dbName}.db`});
+	// 		this.dbReady.next(true);
+	// 	}
+	// }
 
-		const dbSetupDone = await Storage.get({key: DB_SETUP_KEY});
-
-		if (!dbSetupDone.value) {
-			this.downloadDatabase();
-		} else {
-			this.dbName = (await Storage.get({key: DB_NAME_KEY})).value;
-			await CapacitorSQLite.open({database: `${this.dbName}.db`});
-			this.dbReady.next(true);
-		}
-	}
-
-	private async downloadDatabase(update = false) {
-		this.http.get('https://devdactic.fra1.digitaloceanspaces.com/tutorial/db.json').subscribe(async (jsonExport: JsonSQLite) => {
-			const jsonstring = JSON.stringify(jsonExport);
-			const isValid = await CapacitorSQLite.isJsonValid({jsonstring});
-
-			if (isValid.result) {
-				this.dbName = jsonExport.database;
-				await Storage.set({key: DB_NAME_KEY, value: this.dbName});
-				await CapacitorSQLite.importFromJson({jsonstring});
-				await Storage.set({key: DB_SETUP_KEY, value: '1'});
-
-				// Your potential logic to detect offline changes later
-				if (!update) {
-					await CapacitorSQLite.createSyncTable({});
-				} else {
-					await CapacitorSQLite.setSyncDate({syncdate: '' + new Date().getTime()});
-				}
-				this.dbReady.next(true);
-			}
-		});
-	}
+	// private async downloadDatabase(update = false) {
+	// 	this.http.get('https://devdactic.fra1.digitaloceanspaces.com/tutorial/db.json').subscribe(async (jsonExport: JsonSQLite) => {
+	// 		const jsonstring = JSON.stringify(jsonExport);
+	// 		const isValid = await CapacitorSQLite.isJsonValid({jsonstring});
+	//
+	// 		if (isValid.result) {
+	// 			this.dbName = jsonExport.database;
+	// 			await Storage.set({key: DB_NAME_KEY, value: this.dbName});
+	// 			await CapacitorSQLite.importFromJson({jsonstring});
+	// 			await Storage.set({key: DB_SETUP_KEY, value: '1'});
+	//
+	// 			// Your potential logic to detect offline changes later
+	// 			if (!update) {
+	// 				await CapacitorSQLite.createSyncTable({});
+	// 			} else {
+	// 				await CapacitorSQLite.setSyncDate({syncdate: '' + new Date().getTime()});
+	// 			}
+	// 			this.dbReady.next(true);
+	// 		}
+	// 	});
+	// }
 
 }
 
 // eslint-disable
 export const createSchema = `
-    CREATE TABLE IF NOT EXISTS periodic (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, last_modified INTEGER DEFAULT (strftime('%s', 'now')));
+	CREATE TABLE IF NOT EXISTS periodic
+	(
+		id            CHAR(36) PRIMARY KEY UNIQUE,
+		title         STRING,
+		last_modified INTEGER DEFAULT (strftime('%s', 'now'))
+	);
 
-    CREATE TABLE IF NOT EXISTS periodic_item (id CHAR (36) PRIMARY KEY UNIQUE, title STRING, value DOUBLE (10, 2), date INTEGER, list_id CHAR (36), last_modified INTEGER DEFAULT (strftime('%s', 'now')));
+	CREATE TABLE IF NOT EXISTS periodic_item
+	(
+		id            CHAR(36) PRIMARY KEY UNIQUE,
+		title         STRING,
+		value         DOUBLE(10, 2),
+		date          INTEGER,
+		list_id       CHAR(36),
+		last_modified INTEGER DEFAULT (strftime('%s', 'now'))
+	);
 
-    CREATE TRIGGER IF NOT EXISTS AutoGenerateGUID
-      AFTER INSERT
-      ON periodic
-      FOR EACH ROW WHEN (NEW.id IS NULL)
-    BEGIN
-      UPDATE periodic
-      SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-                       substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
-                       substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
-      WHERE rowid = NEW.rowid;
-    END;
+	CREATE TRIGGER IF NOT EXISTS AutoGenerateGUID
+		AFTER INSERT
+		ON periodic
+		FOR EACH ROW
+		WHEN (NEW.id IS NULL)
+	BEGIN
+		UPDATE periodic
+		SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+						 substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+						 substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+		WHERE rowid = NEW.rowid;
+	END;
 
-    CREATE TRIGGER IF NOT EXISTS AutoGenerateGUID1
-      AFTER INSERT
-      ON periodic_item
-      FOR EACH ROW WHEN (NEW.id IS NULL)
-    BEGIN
-      UPDATE periodic_item
-      SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-                       substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
-                       substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
-      WHERE rowid = NEW.rowid;
-    END;
-  `;
-
-const DUMP = {
-	database: 'consume',
-	version: 1,
-	encrypted: false,
-	mode: 'full',
-	tables: []
-};
+	CREATE TRIGGER IF NOT EXISTS AutoGenerateGUID1
+		AFTER INSERT
+		ON periodic_item
+		FOR EACH ROW
+		WHEN (NEW.id IS NULL)
+	BEGIN
+		UPDATE periodic_item
+		SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+						 substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+						 substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+		WHERE rowid = NEW.rowid;
+	END;
+`;
