@@ -1,8 +1,9 @@
-import { Injectable }      from '@angular/core';
-import { TListItem }       from '../components/list/list.component';
-import { TSettingItem }                from './settings.service';
-import {BehaviorSubject, from, Observable} from 'rxjs';
-import { DatabaseService }             from './database.service';
+import { Injectable }                      from '@angular/core';
+import { TListItem }                       from '../components/list/list.component';
+import { TSettingItem }                          from './settings.service';
+import { BehaviorSubject, from, Observable, of } from 'rxjs';
+import { DatabaseService }                       from './database.service';
+import { TPeriodicModel }                  from '../models/TPeriodicModel';
 
 @Injectable({
 	providedIn: 'root'
@@ -48,6 +49,10 @@ export class PeriodicService {
 
 	getPeriodicParentList() {
 		return from(this.dbService.getData('periodic'));
+	}
+
+	addPeriodicParent(item: TPeriodicModel) {
+		return of(this.dbService.addData('periodic', item));
 	}
 }
 

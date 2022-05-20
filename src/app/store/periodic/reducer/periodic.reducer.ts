@@ -1,6 +1,7 @@
 import * as PeriodicActions                  from '../actions/periodic.actions';
 import { TPeriodicListItem, TPeriodicModel } from '../../../models/TPeriodicModel';
 import { createReducer, on }                 from '@ngrx/store';
+import { addPeriodicSuccess }                from '../actions/periodic.actions';
 
 export interface IPeriodicState {
   parents: TPeriodicModel[]; items: TPeriodicListItem[];
@@ -17,6 +18,6 @@ export const periodicReducer = createReducer(
 	  console.log(action.items);
 	  return {...state, parents: [...action.items]};
   }),
-  on(PeriodicActions.addPeriodic, (state, {type, ...item}) => ({...state, parents: [...state.parents, item]})),
+  on(PeriodicActions.addPeriodicSuccess, (state, {type, ...item}) => ({...state, parents: [...state.parents, item]})),
   on(PeriodicActions.addPeriodicItem, (state, {type, ...item}) => ({...state, items: [...state.items, item]})),
 );
