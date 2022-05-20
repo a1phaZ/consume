@@ -55,8 +55,9 @@ export class PeriodicPage implements OnInit {
 	}
 
 	init() {
-		const data = this.periodicService.getPeriodicParentList();
-		console.log(data);
+		this.store.dispatch(PeriodicActions.getPeriodic());
+		// const data = this.periodicService.getPeriodicParentList();
+		// data.subscribe(d => console.log('subscribe', d));
 	}
 
 	calcTotal(list: TListItem[] | TSettingItem[], ...other): string {

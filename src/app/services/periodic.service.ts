@@ -1,7 +1,7 @@
 import { Injectable }      from '@angular/core';
 import { TListItem }       from '../components/list/list.component';
 import { TSettingItem }                from './settings.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, from, Observable} from 'rxjs';
 import { DatabaseService }             from './database.service';
 
 @Injectable({
@@ -51,7 +51,8 @@ export class PeriodicService {
 		// this.periodicList.next(data);
 		// return this.periodicList;
 		console.log('getPeriodicParentList()', this.dbService.getData('periodic'));
-		return this.dbService.getData('periodic');
+		this.dbService.getData('periodic').then((data) => console.log('promise then', data));
+		return from(this.dbService.getData('periodic'));
 	}
 }
 

@@ -3,6 +3,7 @@ import { TPeriodicListItem, TPeriodicModel } from '../../../models/TPeriodicMode
 
 export enum EPeriodicActionsType {
 	getAll = '[Periodic] Get All',
+	addAll = '[Periodic] Add All',
 	addItem = '[Periodic] Add Item',
 	getList = '[Periodic] Get List',
 	addListItem = '[Periodic] Add List Item',
@@ -10,6 +11,11 @@ export enum EPeriodicActionsType {
 
 export const getPeriodic = createAction(
   EPeriodicActionsType.getAll,
+);
+
+export const addPeriodicAll = createAction(
+	EPeriodicActionsType.addAll,
+	props<{ items: TPeriodicModel[] }>()
 );
 
 export const addPeriodic = createAction(

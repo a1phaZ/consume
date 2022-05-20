@@ -66,17 +66,22 @@ export class DatabaseService {
 
 
 	async getData(tableName) {
-		return this.dbReady.pipe(
-			switchMap(async isReady => {
-				if (!isReady) {
-					return of({values: []});
-				} else {
-					const statement = `SELECT *
+		const statement = `SELECT *
 						   FROM ${tableName};`;
-					return from(this.db.query(statement, []));
-				}
-			})
-		);
+		const values = (await this.db.query(statement, [])).values;
+		console.log('async getData()', values);
+		return Promise.resolve(values);
+		// return this.dbReady.pipe(
+		// 	switchMap(async isReady => {
+		// 		if (!isReady) {
+		// 			return of({values: []});
+		// 		} else {
+		// 			const statement = `SELECT *
+		// 				   FROM ${tableName};`;
+		// 			return from(this.db.query(statement, []));
+		// 		}
+		// 	})
+		// );
 	}
 
 	async addData(tableName, values) {

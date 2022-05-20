@@ -13,6 +13,10 @@ export const initialState: IPeriodicState = {
 
 export const periodicReducer = createReducer(
   initialState,
+  on(PeriodicActions.addPeriodicAll, (state, action) => {
+	  console.log(action.items);
+	  return {...state, parents: [...action.items]};
+  }),
   on(PeriodicActions.addPeriodic, (state, {type, ...item}) => ({...state, parents: [...state.parents, item]})),
   on(PeriodicActions.addPeriodicItem, (state, {type, ...item}) => ({...state, items: [...state.items, item]})),
 );

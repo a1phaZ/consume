@@ -20,6 +20,8 @@ import { TuiMobileCalendarDialogModule, TuiMobileCalendarModule } from '@taiga-u
 import { TuiInputDateModule }                                     from '@taiga-ui/kit';
 import { PolymorpheusModule }                                     from '@tinkoff/ng-polymorpheus';
 import { of }                                                     from 'rxjs';
+import {EffectsModule} from '@ngrx/effects';
+import {PeriodicEffects} from './store/periodic/effects/periodic.effects';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -36,6 +38,7 @@ import { of }                                                     from 'rxjs';
 		StoreModule.forRoot({
 			periodic: periodicReducer
 		}),
+		EffectsModule.forRoot([PeriodicEffects]),
 		TuiRootModule,
 		TuiDialogModule,
 		TuiMobileCalendarModule,
