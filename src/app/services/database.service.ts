@@ -76,7 +76,7 @@ export class DatabaseService {
 		console.log(values);
 		const sqlcmd =
 			`INSERT INTO ${tableName} (${this.getObjectKeys(values).join(',')})
-			 VALUES (${this.getObjectKeys(values).length});`;
+			 VALUES (${Array(this.getObjectKeys(values).length).fill('?').join(',')});`;
 		await this.db.run(sqlcmd, this.getObjectValues(values));
 		return true;
 	}
