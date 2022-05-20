@@ -73,6 +73,7 @@ export class DatabaseService {
 	}
 
 	async addData(tableName, values) {
+		console.log(values);
 		const sqlcmd =
 			`INSERT INTO ${tableName} (${this.getObjectKeys(values).join(',')})
 			 VALUES (${this.getObjectKeys(values).length});`;
