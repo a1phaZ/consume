@@ -1,8 +1,9 @@
-import {Injectable}                  from '@angular/core';
-import { BehaviorSubject, from, of } from 'rxjs';
+import {Injectable}                                            from '@angular/core';
+import { BehaviorSubject, from, of }                           from 'rxjs';
 import '@capacitor-community/sqlite';
-import {Device} from '@capacitor/device';
+import {Device}                                                from '@capacitor/device';
 import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite';
+import { switchMap }                                           from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root'
@@ -65,11 +66,17 @@ export class DatabaseService {
 
 
 	async getData(tableName) {
-		const statement = `SELECT *
+		return this.dbReady.pipe(
+			switchMap(async isReady => {
+				if (!isReady) {
+					return of({values: []});
+				} else {
+					const statement = `SELECT *
 						   FROM ${tableName};`;
-		const res = await this.db.query(statement, []);
-		console.log('async getData(tableName)', res);
-		return res.values;
+					return from(this.db.query(statement, []));
+				}
+			})
+		);
 	}
 
 	async addData(tableName, values) {

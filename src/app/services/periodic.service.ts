@@ -50,6 +50,7 @@ export class PeriodicService {
 		// const data = await this.dbService.getData('periodic');
 		// this.periodicList.next(data);
 		// return this.periodicList;
+		console.log('getPeriodicParentList()', this.dbService.getData('periodic'));
 		return this.dbService.getData('periodic');
 	}
 }
