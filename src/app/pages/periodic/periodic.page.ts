@@ -63,7 +63,8 @@ export class PeriodicPage implements OnInit {
 	}
 
 	addGroup(data) {
-		this.store.dispatch(PeriodicActions.addPeriodic({...data}));
+		const id = uuidv4();
+		this.store.dispatch(PeriodicActions.addPeriodic({...data, id}));
 	}
 
 	addItem({id, title, sum, income, date}) {

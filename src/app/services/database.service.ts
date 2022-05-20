@@ -86,6 +86,8 @@ export class DatabaseService {
 	}
 
 	getObjectValues(v) {
+		console.log(v);
+		console.log(this.getObjectKeys(v).map((key) => v[key]));
 		return this.getObjectKeys(v).map((key) => v[key]);
 	}
 }
