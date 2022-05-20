@@ -51,7 +51,7 @@ export class PeriodicService {
 		return from(this.dbService.getData('periodic'));
 	}
 
-	addPeriodicParent(item: TPeriodicModel) {
+	addPeriodicParent({type, ...item}) {
 		return of(this.dbService.addData('periodic', item));
 	}
 }
