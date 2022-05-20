@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {Injectable}                  from '@angular/core';
+import { BehaviorSubject, from, of } from 'rxjs';
 import '@capacitor-community/sqlite';
 import {Device} from '@capacitor/device';
 import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite';
@@ -67,7 +67,9 @@ export class DatabaseService {
 	async getData(tableName) {
 		const statement = `SELECT *
 						   FROM ${tableName};`;
-		return await this.db.query(statement, []);
+		const res = await this.db.query(statement, []);
+		console.log('async getData(tableName)', res);
+		return res.values;
 	}
 
 	async addData(tableName, values) {

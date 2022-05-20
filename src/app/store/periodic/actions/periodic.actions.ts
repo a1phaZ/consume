@@ -1,23 +1,30 @@
 import { createAction, props }               from '@ngrx/store';
 import { TPeriodicListItem, TPeriodicModel } from '../../../models/TPeriodicModel';
 
+export enum EPeriodicActionsType {
+	getAll = '[Periodic] Get All',
+	addItem = '[Periodic] Add Item',
+	getList = '[Periodic] Get List',
+	addListItem = '[Periodic] Add List Item',
+}
+
 export const getPeriodic = createAction(
-  '[Periodic] Get All',
+  EPeriodicActionsType.getAll,
 );
 
 export const addPeriodic = createAction(
-  '[Periodic] Add Item',
+  EPeriodicActionsType.addItem,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   props<TPeriodicModel>()
 );
 
 export const getPeriodicListItems = createAction(
-  '[Periodic] Get List',
+  EPeriodicActionsType.getList,
   props<{id: string}>()
 );
 
 export const addPeriodicItem = createAction(
-  '[Periodic] Add List Item',
+  EPeriodicActionsType.addListItem,
   props<TPeriodicListItem>()
 );
 
