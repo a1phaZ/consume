@@ -43,21 +43,11 @@ export class PeriodicPage implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.lists = this.periodicService.list;
-		// TODO Get all action
-		// this.store.dispatch(PeriodicActions.getPeriodic());
 		this.init();
-		// 	.then(({values}) => {
-		// 		if (values.length > 0) {
-		// 			values.forEach((value) => this.store.dispatch(PeriodicActions.addPeriodic({...value})));
-		// 		}
-		// 	});
 	}
 
 	init() {
 		this.store.dispatch(PeriodicActions.getPeriodic());
-		// const data = this.periodicService.getPeriodicParentList();
-		// data.subscribe(d => console.log('subscribe', d));
 	}
 
 	calcTotal(list: TListItem[] | TSettingItem[], ...other): string {

@@ -10,7 +10,6 @@ export class PeriodicEffects {
 		ofType(EPeriodicActionsType.getAll),
 		exhaustMap(() => this.periodicService.getPeriodicParentList().pipe(
 			map(items => addPeriodicAll({items}))
-			// map(items => ({type: EPeriodicActionsType.addAll, items: [...items]}))
 		))
 	));
 

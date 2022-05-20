@@ -46,7 +46,6 @@ export class AppComponent {
 	      await db.execute(createSchema);
 	      await db.createSyncTable();
 	      await db.setSyncDate(new Date().toISOString());
-	      // await this.databaseService.addData();
 	      this.databaseService.dbReady.next(true);
 	    }
 	  } catch (e) {

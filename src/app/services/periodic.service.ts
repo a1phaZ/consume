@@ -47,11 +47,6 @@ export class PeriodicService {
 	}
 
 	getPeriodicParentList() {
-		// const data = await this.dbService.getData('periodic');
-		// this.periodicList.next(data);
-		// return this.periodicList;
-		console.log('getPeriodicParentList()', this.dbService.getData('periodic'));
-		this.dbService.getData('periodic').then((data) => console.log('promise then', data));
 		return from(this.dbService.getData('periodic'));
 	}
 }
