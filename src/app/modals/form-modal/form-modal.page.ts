@@ -1,7 +1,7 @@
-import { Component, Input, OnInit }                        from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalService }                                    from '../../services/modal.service';
-import { TFormField }                                      from '../../models/TFormField';
+import { Component, Input, OnInit }            from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ModalService }                        from '../../services/modal.service';
+import { TFormField }                          from '../../models/TFormField';
 
 @Component({
 	selector: 'app-form-modal',
@@ -24,7 +24,7 @@ export class FormModalPage implements OnInit {
 		const controlsConfig = this.fields.reduce(
 			(acc, field: TFormField) => ({
 					...acc,
-					[field.name]: new FormControl(field.value, [Validators.required])
+					[field.name]: new FormControl(field.value, field.validators)
 				}
 			), {}
 		);
