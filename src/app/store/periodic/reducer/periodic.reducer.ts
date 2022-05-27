@@ -1,7 +1,6 @@
 import * as PeriodicActions                  from '../actions/periodic.actions';
 import { TPeriodicListItem, TPeriodicModel } from '../../../models/TPeriodicModel';
 import { createReducer, on }                 from '@ngrx/store';
-import { addPeriodicSuccess }                from '../actions/periodic.actions';
 
 export interface IPeriodicState {
   parents: TPeriodicModel[]; items: TPeriodicListItem[];

@@ -6,7 +6,6 @@ import { HomePage }    from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { MainHeaderComponent }   from '../../components/main-header/main-header.component';
-import { ButtonsPanelComponent } from '../../components/buttons-panel/buttons-panel.component';
 import { ButtonComponent }       from '../../components/button/button.component';
 import { ListComponent }         from '../../components/list/list.component';
 import { ListItemComponent }     from '../../components/list-item/list-item.component';
@@ -15,6 +14,7 @@ import { MainContentComponent }  from '../../components/main-content/main-conten
 import { PipesModule }           from '../../pipes/pipes.module';
 import { FormModalPageModule }   from '../../modals/form-modal/form-modal.module';
 import { TuiMoneyModule }        from '@taiga-ui/addon-commerce';
+import { TuiButtonModule }       from '@taiga-ui/core';
 
 
 @NgModule({
@@ -26,6 +26,7 @@ import { TuiMoneyModule }        from '@taiga-ui/addon-commerce';
 		PipesModule,
 		FormModalPageModule,
 		TuiMoneyModule,
+		TuiButtonModule,
 	],
   exports: [
     ListComponent,
@@ -35,7 +36,6 @@ import { TuiMoneyModule }        from '@taiga-ui/addon-commerce';
   declarations: [
     HomePage,
     MainHeaderComponent,
-    ButtonsPanelComponent,
     ButtonComponent,
     ListComponent,
     ListItemComponent,

@@ -44,6 +44,7 @@ export class ListComponent implements OnInit {
 export type TListItem = {
   title: string;
   date: number;
-  sum: { value: number; income?: boolean };
+  value: number;
+  income?: boolean;
   icon?: string;
 };

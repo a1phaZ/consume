@@ -3,12 +3,12 @@
     <app-list-header [title]="'Абонентские платежи'"
                      [mainHeader]="true" [buttonTitle]="'Добавить'"
                      (buttonClick)="showModal(typeCategory)"></app-list-header>
-    <app-list [list]="p.list" *ngFor="let p of periodic$ | async">
+    <app-list [list]="p.list" *ngFor="let p of items$ | async">
       <app-list-header [title]="p.title"
                        [mainHeader]="false"
                        [buttonTitle]="'Добавить элемент'"
                        [total]="calcTotal(p.list) | currency:'RUB':'symbol-narrow':'.2-2':'ru'"
-                       (buttonClick)="showModal(typeItem, p.id)"></app-list-header>
+                       (buttonClick)="showModal(typeItem, {id: p.id})"></app-list-header>
     </app-list>
   </app-main-content>
 </ion-content>

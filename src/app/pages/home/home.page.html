@@ -1,9 +1,19 @@
 <ion-content [fullscreen]="true">
-  <app-main-header></app-main-header>
-  <app-main-content>
-    <app-buttons-panel></app-buttons-panel>
-    <app-list>
-      <app-list-header [title]="'Период: 15-30 апреля'" [buttonTitle]="'Подробнее'"></app-list-header>
-    </app-list>
-  </app-main-content>
+<!--  <app-main-header></app-main-header>-->
+<!--  <app-main-content>-->
+<!--    <app-buttons-panel></app-buttons-panel>-->
+<!--    <app-list>-->
+<!--      <app-list-header [title]="'Период: 15-30 апреля'" [buttonTitle]="'Подробнее'"></app-list-header>-->
+<!--    </app-list>-->
+<!--  </app-main-content>-->
+	<app-main-content>
+		<app-list [list]="items$ | async">
+			<app-list-header [title]="'Активность'" [buttonTitle]="'Подробнее'"></app-list-header>
+		</app-list>
+		<button tuiButton (click)="showModal(actionType)">Добавить</button>
+	</app-main-content>
+
+<!--	<div *ngFor="let transaction of items$ | async">-->
+<!--		<pre>{{transaction | json}}</pre>-->
+<!--	</div>-->
 </ion-content>

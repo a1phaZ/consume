@@ -1,8 +1,9 @@
-import { Injectable }      from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { FormModalPage }   from '../modals/form-modal/form-modal.page';
+import { Injectable }              from '@angular/core';
+import { ModalController }         from '@ionic/angular';
+import { FormModalPage }           from '../modals/form-modal/form-modal.page';
 import { BehaviorSubject }         from 'rxjs';
 import { EModalTypes, TFormField } from '../models/TFormField';
+import { Validators }              from '@angular/forms';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,6 +20,7 @@ export class ModalService {
 				placeholder: 'Введите название',
 				type: 'text',
 				value: null,
+				validators: [Validators.required],
 			}
 		],
 		[EModalTypes.item]: [
@@ -28,6 +30,7 @@ export class ModalService {
 				placeholder: 'Введите название',
 				type: 'text',
 				value: null,
+				validators: [Validators.required],
 			},
 			{
 				name: 'sum',
@@ -35,14 +38,58 @@ export class ModalService {
 				placeholder: 'Введите сумму',
 				type: 'number',
 				value: null,
+				validators: [Validators.required],
 			},
 			{
 				name: 'date',
 				label: 'Дата платежа',
 				placeholder: null,
 				type: 'date',
-				value: null
+				value: null,
+				validators: [Validators.required],
 			}
+		],
+		[EModalTypes.transaction]: [ //{id, title, sum, income, date, description, category}
+			{
+				name: 'title',
+				label: 'Название',
+				placeholder: 'Введите название',
+				type: 'text',
+				value: null,
+				validators: [Validators.required],
+			},
+			{
+				name: 'value',
+				label: 'Сумма',
+				placeholder: 'Введите сумму',
+				type: 'number',
+				value: null,
+				validators: [Validators.required],
+			},
+			{
+				name: 'date',
+				label: 'Дата платежа',
+				placeholder: null,
+				type: 'date',
+				value: null,
+				validators: [Validators.required],
+			},
+			{
+				name: 'description',
+				label: 'Описание',
+				placeholder: 'Введите описание',
+				type: 'text',
+				value: null,
+				validators: [],
+			},
+			{
+				name: 'category',
+				label: 'Категории',
+				placeholder: 'Введите категорию',
+				type: 'text',
+				value: null,
+				validators: [],
+			},
 		]
 	};
 

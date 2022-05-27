@@ -8,22 +8,15 @@
     <div class="info__description">{{item.date | dateFormat}}</div>
     <div class="info__description">{{item.description}}</div>
   </section>
-  <section class="item__total" *ngIf="item.sum">
-    <div class="item__value {{item.sum.income ? 'income' : null}}">
+  <section class="item__total" *ngIf="item.value">
+    <div class="item__value {{item.income ? 'income' : null}}">
 <!--      <span class="value__sign">{{item.sum.income ? '+' : '-'}}</span>-->
 		<tui-money class="balance"
 				   [colored]="true"
 				   [currency]="'RUB'"
-				   [value]="getValue(item.sum)"
+				   [value]="item | value"
 				   [decimal]="'always'">
-
 		</tui-money>
-    </div>
-  </section>
-  <section class="item__total" *ngIf="item.value">
-    <div class="item__value value">
-<!--      TODO Add units to value-->
-      {{item.value}}
     </div>
   </section>
 </div>

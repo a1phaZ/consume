@@ -14,14 +14,20 @@ import { PopoverService }                                         from './servic
 import { HttpClientModule }                                       from '@angular/common/http';
 import { StoreModule }                                            from '@ngrx/store';
 import { periodicReducer }                                        from './store/periodic/reducer/periodic.reducer';
-import { TuiDialogModule, TuiRootModule }                         from '@taiga-ui/core';
-import { BrowserAnimationsModule }                                from '@angular/platform-browser/animations';
+import { TuiDialogModule, TuiRootModule } from '@taiga-ui/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TuiMobileCalendarDialogModule, TuiMobileCalendarModule } from '@taiga-ui/addon-mobile';
-import { TuiInputDateModule }                                     from '@taiga-ui/kit';
-import { PolymorpheusModule }                                     from '@tinkoff/ng-polymorpheus';
-import { of }                                                     from 'rxjs';
+import { TuiInputDateModule } from '@taiga-ui/kit';
+import { PolymorpheusModule } from '@tinkoff/ng-polymorpheus';
+import { of } from 'rxjs';
 import {EffectsModule} from '@ngrx/effects';
 import {PeriodicEffects} from './store/periodic/effects/periodic.effects';
+import {
+	transactionReducer
+} from './store/transaction/reducer/transaction.reducer';
+import {
+	TransactionEffects
+} from './store/transaction/effects/transaction.effects';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -36,9 +42,10 @@ import {PeriodicEffects} from './store/periodic/effects/periodic.effects';
 		ReactiveFormsModule,
 		HttpClientModule,
 		StoreModule.forRoot({
-			periodic: periodicReducer
+			periodic: periodicReducer,
+			transactions: transactionReducer,
 		}),
-		EffectsModule.forRoot([PeriodicEffects]),
+		EffectsModule.forRoot([PeriodicEffects, TransactionEffects]),
 		TuiRootModule,
 		TuiDialogModule,
 		TuiMobileCalendarModule,

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TListItem }                from '../list/list.component';
 import { TSettingItem }             from '../../services/settings.service';
 
@@ -7,18 +7,11 @@ import { TSettingItem }             from '../../services/settings.service';
 	templateUrl: './list-item.component.html',
 	styleUrls: ['./list-item.component.scss'],
 })
-export class ListItemComponent implements OnInit {
+export class ListItemComponent {
 
 	@Input() item: TListItem | TSettingItem;
 
 	constructor() {
-	}
-
-	ngOnInit() {
-	}
-
-	getValue(sumObject) {
-		return !!sumObject.income ? sumObject.value : -1 * sumObject.value;
 	}
 
 }
