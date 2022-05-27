@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { TSettingItem }             from '../../services/settings.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { TSettingItem }             from '../../services/settings.service';
 export class ListComponent implements OnInit {
 
   @Input() list: TListItem[] | TSettingItem[] = [];
+  @Output() editFunc: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
     this.list = [];

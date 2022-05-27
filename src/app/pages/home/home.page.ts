@@ -1,15 +1,15 @@
-import { Component }              from '@angular/core';
-import { ModalService }           from '../../services/modal.service';
-import { DatabaseService }        from '../../services/database.service';
-import { Store }                  from '@ngrx/store';
-import { TStore }                 from '../../models/store.model';
-import * as TransactionActions    from '../../store/transaction/actions/transaction.actions';
-import { UuidService }            from '../../services/uuid.service';
-import { selectTransactionState } from '../../store/transaction/selectors/transaction.selectors';
-import { Observable }             from 'rxjs';
-import { TTransaction }           from '../../models/transaction.model';
-import { BasePageClass }          from '../../_base/base-page.class';
-import { EModalTypes }            from '../../models/TFormField';
+import {Component} from '@angular/core';
+import {ModalService} from '../../services/modal.service';
+import {DatabaseService} from '../../services/database.service';
+import {Store} from '@ngrx/store';
+import {TStore} from '../../models/store.model';
+import * as TransactionActions from '../../store/transaction/actions/transaction.actions';
+import {UuidService} from '../../services/uuid.service';
+import {selectTransactionState} from '../../store/transaction/selectors/transaction.selectors';
+import {Observable} from 'rxjs';
+import {TTransaction} from '../../models/transaction.model';
+import {BasePageClass} from '../../_base/base-page.class';
+import {EModalTypes} from '../../models/TFormField';
 
 @Component({
 	selector: 'app-home',
@@ -29,17 +29,18 @@ export class HomePage extends BasePageClass {
 		public idService: UuidService,
 	) {
 		super(modalService, store, idService);
-
-		this.store.subscribe((data) => {
-			console.log('store', data);
-		});
 	}
 
 	addItem(data: TTransaction): void {
 		this.store.dispatch(TransactionActions.addTransaction(data));
 	}
 
+	patchValue(data) {
+		this.store.dispatch(TransactionActions.patchTransaction(data));
+	}
+
 	init(): void {
+		console.log('home init');
 	}
 
 	modalDataSubscribeHandle(): void {
@@ -47,10 +48,12 @@ export class HomePage extends BasePageClass {
 			if (!data) {
 				return;
 			}
-			const {id = this.idService.uuid, title, value, income = false, date, description, category} = data;
-			this.addItem({id, title, value, income, date, description, category});
+			const {id, title, value, income = false, date, description, category} = data;
+			if (!id) {
+				this.addItem({id: this.idService.uuid, title, value, income, date, description, category});
+				return;
+			}
+			this.patchValue({id, title, value, income, date, description, category});
 		});
 	}
-
-
 }

@@ -1,23 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { TListItem }         from '../../components/list/list.component';
-import { TSettingItem }      from '../../services/settings.service';
-import { PeriodicService }   from '../../services/periodic.service';
-import { Observable }        from 'rxjs';
-import { Store }             from '@ngrx/store';
-import * as PeriodicActions  from '../../store/periodic/actions/periodic.actions';
-import { selectPeriodic }    from '../../store/periodic/selectors/periodic.selectors';
-import { ModalService }      from '../../services/modal.service';
-import { EModalTypes }       from '../../models/TFormField';
-import { BasePageClass }     from '../../_base/base-page.class';
-import { TStore }            from '../../models/store.model';
-import { UuidService }       from '../../services/uuid.service';
+import {Component} from '@angular/core';
+import {TListItem} from '../../components/list/list.component';
+import {TSettingItem} from '../../services/settings.service';
+import {PeriodicService} from '../../services/periodic.service';
+import {Observable} from 'rxjs';
+import {Store} from '@ngrx/store';
+import * as PeriodicActions from '../../store/periodic/actions/periodic.actions';
+import {selectPeriodic} from '../../store/periodic/selectors/periodic.selectors';
+import {ModalService} from '../../services/modal.service';
+import {EModalTypes} from '../../models/TFormField';
+import {BasePageClass} from '../../_base/base-page.class';
+import {TStore} from '../../models/store.model';
+import {UuidService} from '../../services/uuid.service';
 
 @Component({
 	selector: 'app-periodic',
 	templateUrl: './periodic.page.html',
 	styleUrls: ['./periodic.page.scss'],
 })
-export class PeriodicPage extends BasePageClass implements OnInit {
+export class PeriodicPage extends BasePageClass {
 
 	typeCategory = EModalTypes.category;
 	typeItem = EModalTypes.item;
@@ -49,10 +49,6 @@ export class PeriodicPage extends BasePageClass implements OnInit {
 		});
 	}
 
-	ngOnInit() {
-		this.init();
-	}
-
 	init() {
 		this.store.dispatch(PeriodicActions.getPeriodic());
 	}
@@ -64,6 +60,10 @@ export class PeriodicPage extends BasePageClass implements OnInit {
 	addGroup(data) {
 		const id = this.idService.uuid;
 		this.store.dispatch(PeriodicActions.addPeriodic({...data, id}));
+	}
+
+	patchValue(data) {
+		return;
 	}
 
 	addItem({id, title, sum, income, date}) {

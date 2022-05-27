@@ -7,7 +7,7 @@
 <!--    </app-list>-->
 <!--  </app-main-content>-->
 	<app-main-content>
-		<app-list [list]="items$ | async">
+		<app-list [list]="items$ | async" (editFunc)="editClick($event)">
 			<app-list-header [title]="'Активность'" [buttonTitle]="'Подробнее'"></app-list-header>
 		</app-list>
 		<button tuiButton (click)="showModal(actionType)">Добавить</button>

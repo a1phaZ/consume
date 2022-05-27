@@ -14,4 +14,8 @@ export class TransactionService {
 	addTransaction({type, ...item}) {
 	  return of(this.dbService.addData('transaction', item));
 	}
+
+	patchTransaction({type, ...item}) {
+	  return of(item);
+	}
 }

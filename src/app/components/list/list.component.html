@@ -4,5 +4,5 @@
   <div *ngIf="list.length === 0" class="zero__length">
     Список пуст
   </div>
-  <app-list-item *ngFor="let item of list" [item]="item"></app-list-item>
+  <app-list-item *ngFor="let item of list" [item]="item" (click)="editFunc.emit(item)"></app-list-item>
 </ion-list>
