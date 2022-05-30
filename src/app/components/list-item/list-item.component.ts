@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { TListItem }                from '../list/list.component';
-import { TSettingItem }             from '../../services/settings.service';
+import { TListItem }        from '../list/list.component';
+import { TSettingItem }     from '../../services/settings.service';
 
 @Component({
 	selector: 'app-list-item',

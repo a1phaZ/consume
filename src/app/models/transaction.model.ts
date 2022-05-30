@@ -9,7 +9,7 @@ export type TTransaction = {
 };
 
 export enum ETransactionSign {
-	income = 'income',
-	spend = 'spend',
-	saving = 'saving'
+	income = 1,
+	spend = 2,
+	saving = 3
 }

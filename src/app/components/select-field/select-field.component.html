@@ -1,17 +1,20 @@
-<tui-select [formControl]="formGroup.controls[field.name]"
-			*tuiLet="field.values as items"
-			[tuiTextfieldLabelOutside]="true"
-			[valueContent]="stringify(items)">
-	{{field.label}}
-	<ng-template tuiDataList>
-		<tui-data-list *ngIf="items">
-			<button
-				*ngFor="let item of items"
-				tuiOption
-				[value]="item.id"
-			>
-				{{item.name}}
-			</button>
-		</tui-data-list>
-	</ng-template>
-</tui-select>
+<div [formControl]="formGroup.controls[field.name]" class="input__wrapper">
+	<tui-select
+				*tuiLet="field.values as items"
+				[tuiTextfieldLabelOutside]="true"
+				[valueContent]="stringify(items)">
+		{{field.label}}
+		<ng-template tuiDataList>
+			<tui-data-list *ngIf="items">
+				<button
+					*ngFor="let item of items"
+					tuiOption
+					[value]="item.id"
+				>
+					{{item.name}}
+				</button>
+			</tui-data-list>
+		</ng-template>
+	</tui-select>
+
+</div>

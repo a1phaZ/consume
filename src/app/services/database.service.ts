@@ -1,9 +1,8 @@
-import {Injectable}                                            from '@angular/core';
-import { BehaviorSubject, from, of }                           from 'rxjs';
+import { Injectable }                                            from '@angular/core';
+import { BehaviorSubject }                                       from 'rxjs';
 import '@capacitor-community/sqlite';
-import {Device}                                                from '@capacitor/device';
-import {CapacitorSQLite, SQLiteConnection, SQLiteDBConnection} from '@capacitor-community/sqlite';
-import { switchMap }                                           from 'rxjs/operators';
+import { Device }                                                from '@capacitor/device';
+import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 
 @Injectable({
 	providedIn: 'root'
@@ -96,20 +95,69 @@ export class DatabaseService {
 export const createSchema = `
 	CREATE TABLE IF NOT EXISTS periodic
 	(
-		id            CHAR(36) PRIMARY KEY UNIQUE,
-		title         STRING,
-		last_modified INTEGER DEFAULT (strftime('%s', 'now'))
-	);
+		id CHAR
+	(
+		36
+	) PRIMARY KEY UNIQUE,
+		title STRING,
+		last_modified INTEGER DEFAULT
+	(
+		strftime
+	(
+		'%s',
+		'now'
+	))
+		);
 
 	CREATE TABLE IF NOT EXISTS periodic_item
 	(
-		id            CHAR(36) PRIMARY KEY UNIQUE,
-		title         STRING,
-		value         DOUBLE(10, 2),
-		date          INTEGER,
-		list_id       CHAR(36),
-		last_modified INTEGER DEFAULT (strftime('%s', 'now'))
-	);
+		id CHAR
+	(
+		36
+	) PRIMARY KEY UNIQUE,
+		title STRING,
+		value DOUBLE
+	(
+		10,
+		2
+	),
+		date INTEGER,
+		list_id CHAR
+	(
+		36
+	),
+		last_modified INTEGER DEFAULT
+	(
+		strftime
+	(
+		'%s',
+		'now'
+	))
+		);
+
+	CREATE TABLE IF NOT EXISTS transaction
+	(
+		id CHAR
+	(
+		36
+	) PRIMARY KEY UNIQUE,
+		title STRING,
+		date INTEGER,
+		sign INTEGER,
+		value DOUBLE
+	(
+		10,
+		2
+	),
+		category STRING [],
+		last_modified INTEGER DEFAULT
+	(
+		strftime
+	(
+		'%s',
+		'now'
+	))
+		);
 
 	CREATE TRIGGER IF NOT EXISTS AutoGenerateGUID
 		AFTER INSERT
@@ -117,11 +165,11 @@ export const createSchema = `
 		FOR EACH ROW
 		WHEN (NEW.id IS NULL)
 	BEGIN
-		UPDATE periodic
-		SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-						 substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
-						 substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
-		WHERE rowid = NEW.rowid;
+	UPDATE periodic
+	SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+					 substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+					 substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+	WHERE rowid = NEW.rowid;
 	END;
 
 	CREATE TRIGGER IF NOT EXISTS AutoGenerateGUID1
@@ -130,10 +178,10 @@ export const createSchema = `
 		FOR EACH ROW
 		WHEN (NEW.id IS NULL)
 	BEGIN
-		UPDATE periodic_item
-		SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
-						 substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
-						 substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
-		WHERE rowid = NEW.rowid;
+	UPDATE periodic_item
+	SET id = (select hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || '4' ||
+					 substr(hex(randomblob(2)), 2) || '-' || substr('AB89', 1 + (abs(random()) % 4), 1) ||
+					 substr(hex(randomblob(2)), 2) || '-' || hex(randomblob(6)))
+	WHERE rowid = NEW.rowid;
 	END;
 `;

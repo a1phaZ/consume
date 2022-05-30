@@ -9,7 +9,7 @@
     <div class="info__description">{{item.description}}</div>
   </section>
   <section class="item__total" *ngIf="item.value">
-    <div class="item__value {{item.income ? 'income' : null}}">
+    <div class="item__value {{item.sign === 1 ? 'income' : null}}">
 <!--      <span class="value__sign">{{item.sum.income ? '+' : '-'}}</span>-->
 		<tui-money class="balance"
 				   [colored]="true"

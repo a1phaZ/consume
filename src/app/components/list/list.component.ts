@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { TSettingItem }             from '../../services/settings.service';
+import { TSettingItem }                                 from '../../services/settings.service';
+import { ETransactionSign }                             from '../../models/transaction.model';
 
 @Component({
   selector: 'app-list',
@@ -47,5 +48,6 @@ export type TListItem = {
   date: number;
   value: number;
   income?: boolean;
+  sign?: ETransactionSign;
   icon?: string;
 };
