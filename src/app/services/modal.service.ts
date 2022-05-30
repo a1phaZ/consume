@@ -90,6 +90,15 @@ export class ModalService {
 				value: null,
 				validators: [],
 			},
+			{
+				name: 'sign',
+				label: 'Признак',
+				placeholder: 'Выберите признак',
+				type: 'select',
+				value: null,
+				values: [{id: 1, name: 'Доход'}, {id: 2, name: 'Расход'}, {id: 3, name: 'Сбережения'}],
+				validators: [Validators.required],
+			}
 		]
 	};
 

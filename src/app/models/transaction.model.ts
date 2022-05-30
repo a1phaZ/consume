@@ -3,7 +3,13 @@ export type TTransaction = {
 	title: string;
 	date: number;
 	category?: string;
-	income: boolean;
+	sign: ETransactionSign;
 	value: number;
 	description?: string;
 };
+
+export enum ETransactionSign {
+	income = 'income',
+	spend = 'spend',
+	saving = 'saving'
+}

@@ -4,6 +4,7 @@ import { Store }               from '@ngrx/store';
 import { TStore }              from '../../models/store.model';
 import * as TransactionActions from '../../store/transaction/actions/transaction.actions';
 import { UuidService }         from '../../services/uuid.service';
+import { ETransactionSign }    from '../../models/transaction.model';
 
 @Component({
   selector: 'app-buttons-panel',
@@ -22,7 +23,7 @@ export class ButtonsPanelComponent implements OnInit {
 				title: 'test transaction',
 				date: +new Date(),
 				value: 1000,
-				income: true,
+				sign: ETransactionSign.income,
 			}));
 	    }
     },

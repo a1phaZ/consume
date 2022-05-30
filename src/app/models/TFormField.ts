@@ -4,8 +4,9 @@ export type TFormField = {
 	label: string;
 	name: string;
 	placeholder: string;
-	type: 'text' | 'number' | 'date';
+	type: 'text' | 'number' | 'date' | 'select';
 	value: string | number | null;
+	values?: any[];
 	validators?: ValidationErrors;
 };
 

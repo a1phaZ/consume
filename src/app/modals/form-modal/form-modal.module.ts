@@ -4,8 +4,8 @@ import {FormsModule, ReactiveFormsModule}                                       
 import {IonicModule}                                                            from '@ionic/angular';
 import {FormModalPage}                                                          from './form-modal.page';
 import {ComponentsModule}                                                       from '../../components/components.module';
-import {PipesModule}                                                            from '../../pipes/pipes.module';
-import { TuiFieldErrorModule, TuiInputModule }                                                   from '@taiga-ui/kit';
+import {PipesModule}                                                                             from '../../pipes/pipes.module';
+import { TuiDataListWrapperModule, TuiFieldErrorModule, TuiInputModule, TuiSelectModule }        from '@taiga-ui/kit';
 import { TuiButtonModule, TuiHintControllerModule, TuiRootModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { TuiMobileCalendarModule }                                                               from '@taiga-ui/addon-mobile';
 
@@ -24,6 +24,8 @@ import { TuiMobileCalendarModule }                                              
 		TuiRootModule,
 		TuiMobileCalendarModule,
 		TuiButtonModule,
+		TuiSelectModule,
+		TuiDataListWrapperModule,
 	],
 	declarations: [FormModalPage]
 })

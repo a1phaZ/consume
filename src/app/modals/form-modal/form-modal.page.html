@@ -14,12 +14,16 @@
 				<div class="tui-col_xs-12">
 					<div class="tui-form__row tui-row_adaptive">
 						<ng-container *ngFor="let field of fields">
-							<app-input *ngIf="field.type !== 'date'"
+							<app-input *ngIf="field.type === 'text' || field.type === 'number'"
 									   [formGroup]="formGroup"
 									   [field]="field"></app-input>
 							<app-date-field *ngIf="field.type === 'date'"
 											[formGroup]="formGroup"
 											[field]="field"></app-date-field>
+							<app-select-field *ngIf="field.type === 'select'"
+											  [formGroup]="formGroup"
+											  [field]="field"></app-select-field>
+
 						</ng-container>
 					</div>
 				</div>
